@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Progress from '../components/progress/Progress';
 import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
+import Details from '../components/Details';
 
 export type RepoScreenProps = {
 
@@ -37,7 +38,6 @@ export default function RepoScreen(props: RepoScreenProps) {
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }}>
                         <ProgressBars />
-                        <br></br><br></br> {/** No  will not take any questions. Nor will I change this. */}
                         <NameAge name="Bobbithy" age="12 months"/>
                     </Box>
                 </Grid>
@@ -45,7 +45,9 @@ export default function RepoScreen(props: RepoScreenProps) {
                     asd
                 </Grid>
                 <Grid item xs={4}>
-                    asd
+                    <Box sx = {{ ml: 5 }}>
+                        <Details languages={["Python", "JavaScript"]}/>
+                    </Box>
                 </Grid>
             </Grid>
         </Box>

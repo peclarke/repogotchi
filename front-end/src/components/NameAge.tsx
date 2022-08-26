@@ -9,16 +9,16 @@ const theme = createTheme();
 
 theme.typography.h4 = {
     fontSize: '1.2rem',
-    padding: -5,
-    marginTop: -20,
-    marginBottom: -30
+    // padding: -5,
+    // marginTop: -20,
+    // marginBottom: -30
 }
 
 theme.typography.h6 = {
     fontSize: '100%',
-    padding: -5,
-    marginTop: -20,
-    marginBottom: -30,
+    // padding: -5,
+    // marginTop: -20,
+    // marginBottom: -30,
     fontWeight: 50
 }
 
@@ -31,7 +31,32 @@ export default function NameAge(props: NameAgeProps) {
     return (
         <ThemeProvider theme={theme}>
             <Paper elevation={3} sx = {{ width: '50%', height: '100%' }}>
-                <Box sx = {{ ml: 2, pb: 1, height: '100%', lineHeight: 4.5 }}>
+                <Typography variant="h5" sx = {{ pt: 3, pl: 3 }}>Basic View</Typography>
+                <Box display="flex" alignItems="center" justifyContent="center" sx = {{ pl: 2, pr: 2, pb: 3, pt: 2 }}>
+                    <Grid container>
+                        <Grid item xs={6}>
+                            <Box display="flex" alignItems="left" justifyContent="left">
+                            <Typography variant="h4">Name:</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box display="flex" alignItems="left" justifyContent="left">
+                            <Typography>{props.name}</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box display="flex" alignItems="left" justifyContent="left">
+                                <Typography variant="h4">Age:</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box display="flex" alignItems="left" justifyContent="left">
+                            <Typography variant="h6">{props.age}</Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
+                {/* <Box sx = {{ ml: 2, pb: 1, height: '100%', lineHeight: 4.5 }}>
                     <Grid container alignItems="center" justifyContent="center">
                         <Grid item xs={4} alignItems="center" justifyContent="center">
                             <Typography variant="h4">Name:</Typography>
@@ -48,7 +73,7 @@ export default function NameAge(props: NameAgeProps) {
                             <Typography variant="h6">{props.age}</Typography>
                         </Grid>
                     </Grid>
-                </Box>
+                </Box> */}
             </Paper>
         </ThemeProvider>
     )
