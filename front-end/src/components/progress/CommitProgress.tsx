@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 height: 15,
 borderRadius: 8,
-width: '90%',
+width: '100%',
 [`&.${linearProgressClasses.colorPrimary}`]: {
     backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
 },
@@ -30,20 +30,17 @@ theme.typography.h6 = {
     fontWeight: 50
 }
 
-export type ProgressProps = {
-    title:    string;
-    bio:      string;
+export type CommitProgressProps = {
     progress: number;
 }
 
-export default function Progress(props: ProgressProps) {
+export default function CommitProgress(props: CommitProgressProps) {
     const [progress, setProgress] = useState(props.progress);
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx = {{ m: 2, flex: 1, flexDirection: 'column', lineHeight: 3 }}>
-                <Typography variant="h5" component="h2">{props.title}</Typography>
-                <Typography variant="h6">{props.bio}</Typography>
+            <Box sx = {{ m: 2, flex: 1, flexDirection: 'column', lineHeight: 3, width: '100%' }}>
+                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Commit Progress</Typography>
                 <BorderLinearProgress variant="determinate" value={progress} />
             </Box>
         </ThemeProvider>
