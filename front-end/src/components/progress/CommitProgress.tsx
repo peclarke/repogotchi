@@ -39,7 +39,7 @@ export default function CommitProgress(props: CommitProgressProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx = {{ m: 2, flex: 1, flexDirection: 'column', lineHeight: 3, width: '100%' }}>
+            <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
                 <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Commit Progress</Typography>
                 <BorderLinearProgress variant="determinate" value={progress} />
             </Box>

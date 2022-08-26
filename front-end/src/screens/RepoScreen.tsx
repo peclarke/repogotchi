@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Paper from '@mui/material/Paper';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Progress from '../components/progress/Progress';
 import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
 import Details from '../components/Details';
-import CommitProgress from '../components/progress/CommitProgress';
+import Repogotchi from '../components/Repogotchi';
 
 export type RepoScreenProps = {
 
@@ -44,7 +42,8 @@ export default function RepoScreen(props: RepoScreenProps) {
                 </Grid>
                 <Grid item xs={5}>
                     <Box sx = {{ ml: 5 }}>
-                        <CommitProgress progress={40}/>
+                        {/* <CommitProgress progress={40}/> */}
+                        <Repogotchi name="Functional-Programming-Assignment" commits={5} goal={10} />
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
