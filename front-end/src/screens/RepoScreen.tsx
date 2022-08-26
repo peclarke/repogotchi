@@ -42,13 +42,12 @@ export default function RepoScreen(props: RepoScreenProps) {
                 </Grid>
                 <Grid item xs={5}>
                     <Box sx = {{ ml: 5 }}>
-                        {/* <CommitProgress progress={40}/> */}
                         <Repogotchi name="Functional-Programming-Assignment" commits={5} goal={10} />
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }}>
-                        <Details languages={["Python", "JavaScript"]}/>
+                        <Details languages={["Python", "JavaScript", "HTML", "CSS", "Typescript", "Bash"]}/>
                     </Box>
                 </Grid>
             </Grid>
