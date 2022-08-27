@@ -13,6 +13,7 @@ import { firebaseConfig } from '../config/firebase';
 import { RepogotchiType } from '../state/repo';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
+import RepoSettingsDialog from '../dialogs/RepoSettingsDialog';
 
 export type RepoScreenProps = {
 
@@ -36,6 +37,8 @@ export default function RepoScreen(props: RepoScreenProps) {
         Affection: 0,
         MaxAffection: 0,
     });
+
+    const [settings, setSettings] = useState(false);
 
     const { id } = useParams();
 
@@ -76,6 +79,11 @@ export default function RepoScreen(props: RepoScreenProps) {
         stuff();
     }
 
+
+    const updatePersonalName = async (text: string) => {
+
+    }
+
     return (
         <>
         <Box sx={{ flexGrow: 1 }}>
@@ -84,7 +92,8 @@ export default function RepoScreen(props: RepoScreenProps) {
                     <Box sx = {{ ml: 5 }}>
                         <Box display="flex" alignItems="center" justifyContent="space-evenly" sx = {{ mt: 5}}>
                             <Link to="/" style = {{ textDecoration: "none"}}><Button variant="contained">Back</Button></Link>
-                            <Button variant="contained">Settings</Button>
+                            <Button onClick={() => setSettings(true)} variant="contained">Settings</Button>
+                            <RepoSettingsDialog open={settings} onClose={() => setSettings(false)} action={(text: string) => updatePersonalName(text)}/>
                         </Box>
                         <br></br>
                         <hr style = {{ opacity: 0.4}}></hr>

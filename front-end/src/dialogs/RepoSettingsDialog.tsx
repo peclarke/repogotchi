@@ -16,14 +16,13 @@ theme.typography.h5 = {
 }
 
 
-export type ActionRepoDialogProps = {
+export type RepoSettingsDialog = {
     open:    boolean;
     onClose: () => void;
     action:  (txt: string) => void;
-    type:    "add" | "remove";
 }
 
-export default function ActionRepoDialog(props: ActionRepoDialogProps) {
+export default function RepoSettingsDialog(props: RepoSettingsDialog) {
     const [text, setText] = useState("");
 
     const updateText = (e: any) => {
@@ -39,18 +38,15 @@ export default function ActionRepoDialog(props: ActionRepoDialogProps) {
         <ThemeProvider theme={theme}>
             <Dialog onClose={props.onClose} open={props.open}>
                 <DialogTitle>
-                    <Typography variant="h5">{props.type === "add" ? "Add Repository" : "Remove Repository"}</Typography>
+                    <Typography variant="h5">Repository Settings</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <Typography>
-                        { props.type === "remove"
-                        ? "Please enter the name of the Github Repository to remove from the list."
-                        : "Please enter the URL of the Github Repository to add"
-                        }
+                        Customise the features of your repository below!
                     </Typography>
                     <Box sx = {{ mt: 2, display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: 110 }}>
-                        <TextField onChange={updateText} id="repo-dialog-input" label={props.type === "add" ? "Repository URL" : "Repository Name"} variant="outlined" sx = {{ width: "100%"}} />
-                        <Button variant="contained" onClick={buttonClicked} sx = {{ width: "45%"}}>{props.type === "add" ? "Add Repository" : "Remove Repository" }</Button>
+                        <TextField onChange={updateText} id="repo-dialog-input" label="Repository Nickname" variant="outlined" sx = {{ width: "100%"}} />
+                        <Button variant="contained" onClick={buttonClicked} sx = {{ width: "45%"}}>Confirm</Button>
                     </Box>
                 </DialogContent>
             </Dialog>
