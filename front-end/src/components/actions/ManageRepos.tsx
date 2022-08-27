@@ -25,7 +25,7 @@ export default function ManageRepos(props: ManageReposProps) {
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <BigButton action={openAddRepo} type="add"/>
             <BigButton action={openRemoveRepo} type="remove"/>
-            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType}/>
+            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={() => null}/>
         </Box>
     )
 }

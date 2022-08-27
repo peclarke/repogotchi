@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
-import BigButton from '../components/actions/BigButton';
 import ManageRepos from '../components/actions/ManageRepos';
 import RepoListItem from '../components/RepoListItem';
 import useWindowDimensions from '../hooks/useWindowDimensions';
@@ -21,7 +20,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     <Box sx = {{ justifyContent: 'space-evenly', display: 'flex',
                                  flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
                                  paddingLeft: 4, paddingRight: 4}}>
-                        {/* Render this with a proper list element from mui  */}
+                        {/* Render this with a proper list element from mui. Only allow 5 repogotchis  */}
                         <RepoListItem />
                         <RepoListItem />
                         <RepoListItem />
