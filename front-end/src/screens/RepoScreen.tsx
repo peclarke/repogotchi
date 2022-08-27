@@ -103,10 +103,11 @@ export default function RepoScreen(props: RepoScreenProps) {
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={4}>
-                    <Box sx = {{ background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pl: 5, pr: 5 }}>
-                        <RepoButtons updateName={updatePersonalName}/>
+                    <Box sx = {{ background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pt: 5 }}>
+                        {/* <RepoButtons updateName={updatePersonalName}/> */}
                         <ProgressBars repo={rep}/>
                         <NameAge name={rep.PersonalName} age={rep.Age}/>
+                        <RepoButtons updateName={updatePersonalName}/>
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
@@ -115,7 +116,7 @@ export default function RepoScreen(props: RepoScreenProps) {
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <Box sx = {{ ml: 5 }}>
+                    <Box sx = {{ ml: 5, background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pt: 5 }}>
                         <Details languages={rep.Languages}/>
                     </Box>
                 </Grid>
