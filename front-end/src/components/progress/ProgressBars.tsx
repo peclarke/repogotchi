@@ -1,16 +1,24 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Progress from './Progress';
+import { RepogotchiType } from '../../state/repo';
+import Paper from '@mui/material/Paper';
 
 export type ProgressBarsProps = {
-    progress: Record<string, string | number>[];
+    repo: RepogotchiType;
 }
 
-export default function ProgressBars() {
+export default function ProgressBars(props: ProgressBarsProps) {
+
+    const healthPercent = Math.ceil(props.repo.CurrentHealth / props.repo.MaxHealth) * 100;
+    const affPercent = Math.ceil(props.repo.Affection / props.repo.MaxAffection) * 100;
+
     return (
-        <Box>
-            <Progress title="Health" bio="Ability to meet your contribution goals" progress={40}/>
-            <Progress title="Emotional Wellbeing" bio="Consistent contributions to your repository" progress={80}/>
-        </Box>
+        <Paper elevation={10} sx = {{pb: 2}}>
+            <Box>
+                <Progress title="Health" bio="Make commits often to keep their health up" progress={healthPercent}/>
+                <Progress title="Affection" bio="Regular visits improve their affection to you " progress={affPercent}/>
+            </Box>
+        </Paper>
     )
 }

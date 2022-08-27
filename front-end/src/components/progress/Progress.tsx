@@ -26,7 +26,7 @@ theme.typography.h5 = {
 }
 
 theme.typography.h6 = {
-    fontSize: '0.8rem',
+    fontSize: '0.9rem',
     fontWeight: 50
 }
 

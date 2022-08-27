@@ -9,7 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs } from 'firebase/firestore/lite';
 
 export type ManageReposProps = {
-
+    updateRepos: () => void;
 }
 
 export default function ManageRepos(props: ManageReposProps) {
@@ -27,7 +27,7 @@ export default function ManageRepos(props: ManageReposProps) {
     }
 
     // useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
-    useEffect(() => add_repo("https://github.com/peclarke/fullstack-forum"), [])
+    // useEffect(() => add_repo("https://github.com/peclarke/fullstack-forum"), [])
 
     const add_repo = (githubUrl: string) => {
         const app = initializeApp(firebaseConfig);
@@ -47,16 +47,27 @@ export default function ManageRepos(props: ManageReposProps) {
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
                             PersonalName: "Bobbithy",
-                            Age: new Date(json['created_at']).toDateString(),
+                            Age: "0",
                             Languages: Object.keys(jsonLang),
-                            HealthPercent: 100,
-                            WellbePercent: 100,
-                            CommitProgress: 100
+                            MaxHealth: 100,
+                            CurrentHealth: 100,
+                            CommitProgress: 100,
+                            LastCommit: "",
+                            Level: 1,
+                            Birthdate: new Date(json['created_at']).toDateString(),
+                            LevelProgress: 0,
+                            LevelReq: 20,
+                            LastVisit: "",
+                            Affection: 10,
+                            MaxAffection: 10,
                         }
 
                         const userStuff = async () => {
-                            const repoCol = collection(db, "users/peclarke/repogotchis");
-                            const docRef = await addDoc(repoCol, repo);
+                            // const repoCol = collection(db, "users/peclarke/repogotchis");
+                            const repoDoc = doc(db, "users/peclarke/repogotchis", json['name'])
+                            // const docRef = await addDoc(repoCol, repo);
+                            const docRef = await setDoc(repoDoc, repo)
+                            props.updateRepos();
                         }
 
                         userStuff();
@@ -72,7 +83,7 @@ export default function ManageRepos(props: ManageReposProps) {
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <BigButton action={openAddRepo} type="add"/>
             <BigButton action={openRemoveRepo} type="remove"/>
-            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={() => null}/>
+            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => add_repo(text)}/>
         </Box>
     )
 }

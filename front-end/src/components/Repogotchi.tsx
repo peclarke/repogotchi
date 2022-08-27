@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import CommitProgress from './progress/CommitProgress';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import { RepogotchiType } from '../state/repo';
 
 const theme = createTheme();
 
@@ -13,11 +14,13 @@ theme.typography.h5 = {
 
 export type RepogotchiProps = {
     name: string;
-    commits: number;
-    goal: number;
+    repo:  RepogotchiType;
 }
 
 export default function Repogotchi(props: RepogotchiProps) {
+
+    const commitProgress = Math.floor(props.repo.LevelProgress / props.repo.LevelReq) * 100;
+
     return (
         <ThemeProvider theme = {theme}>
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" style = {{ marginTop: 50}}>
@@ -29,7 +32,7 @@ export default function Repogotchi(props: RepogotchiProps) {
                     width="100%"
                     height={500}
                 />
-                <CommitProgress progress={40}/>
+                <CommitProgress progress={commitProgress} repo={props.repo}/>
             </Box>
         </ThemeProvider>
     )

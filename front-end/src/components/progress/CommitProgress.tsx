@@ -3,6 +3,7 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { RepogotchiType } from '../../state/repo';
   
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 height: 15,
@@ -32,15 +33,18 @@ theme.typography.h6 = {
 
 export type CommitProgressProps = {
     progress: number;
+    repo: RepogotchiType;
 }
 
 export default function CommitProgress(props: CommitProgressProps) {
-    const [progress, setProgress] = useState(props.progress);
+
+    const progress = Math.floor((props.repo.LevelProgress / props.repo.LevelReq) * 100)
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
-                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Commit Progress</Typography>
+                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: 1</Typography>
+                <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>{props.repo.LevelProgress} / {props.repo.LevelReq} XP</Typography>
                 <BorderLinearProgress variant="determinate" value={progress} />
             </Box>
         </ThemeProvider>
