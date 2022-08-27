@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import React, { useEffect, useState } from 'react';
@@ -76,6 +77,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                 </Grid>
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }} >
+                        <Typography variant="h2" sx = {{ ml: 11, mt: 3}}>TamaGit</Typography>
                         <ManageRepos updateRepos={getUserRepos} allowAdds={allow}/>
                     </Box>
                 </Grid>

@@ -8,6 +8,10 @@ import { firebaseConfig } from '../../config/firebase';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs, deleteDoc } from 'firebase/firestore/lite';
 import WizardDialog from '../../dialogs/WizardDialog';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import HelpDialog from '../../dialogs/HelpDialog';
 
 export type ManageReposProps = {
     updateRepos: () => void;
@@ -17,6 +21,7 @@ export type ManageReposProps = {
 export default function ManageRepos(props: ManageReposProps) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [wizard, setWizard] = useState(false);
+    const [help, setHelp] = useState(false);
 
     const [dialogType, setDialogType] = useState<"add" | "remove">("add");
 
@@ -107,11 +112,30 @@ export default function ManageRepos(props: ManageReposProps) {
     }
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-            {props.allowAdds ? <BigButton action={openAddRepo} type="add"/> : null }
-            <BigButton action={openRemoveRepo} type="remove"/>
-            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => handleAction(text)}/>
-            <WizardDialog open={wizard} onClose={() => setWizard(false)}/>
-        </Box>
+        <>
+        {/* <Paper elevation={8} sx = {{ mt: 20, mr: 20, ml: -5, pb: 4 }}> */}
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" sx = {{ mr: 6, mt: 20}}>
+                {props.allowAdds ? <BigButton action={openAddRepo} type="add"/> : null }
+                <BigButton action={openRemoveRepo} type="remove"/>
+                
+                <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => handleAction(text)}/>
+                <WizardDialog open={wizard} onClose={() => setWizard(false)}/>
+                <HelpDialog open={help} onClose={() => setHelp(false)} />
+            </Box>
+        {/* </Paper> */}
+
+        {/* <Paper sx = {{ pt: 0, pb: 2}}> */}
+            <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" width="65%" sx = {{ mt: 20, ml: 7}}>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Button variant="outlined" onClick={() => setWizard(true)}>Repo Wizard</Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button variant="outlined" onClick={() => setHelp(true)} sx={{width: '100%'}}>Help</Button>
+                    </Grid>
+                </Grid>
+            </Box>
+        {/* </Paper> */}
+        </>
     )
 }
