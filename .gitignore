@@ -1,3 +1,5 @@
 front-end/package-lock.json
 front-end/node_modules
 node_modules
+firebase-debug.log
+ui-debug.log

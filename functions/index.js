@@ -1,14 +1,15 @@
 const functions = require("firebase-functions");
 
 const admin = require('firebase-admin');
+
 admin.initializeApp();
 
 exports.feedRepogotchi = functions.https.onRequest(async (req, res) => {
     const username = req.body.pusher.name;
     const repository = req.body.repository.full_name;
     const commitList = req.body.commits;
-    // TODO timestamp not working properly, gotta convert it to something
-    const lastupdated = req.body.head_commit.timestamp; // ISO 8601
+    const lastCommitMS = Date.parse(req.body.head_commit.timestamp);
+    const lastUpdated = admin.firestore.Timestamp.fromMillis(lastCommitMS);
 
     //admin.firestore().collection('users').
 
@@ -24,14 +25,19 @@ exports.feedRepogotchi = functions.https.onRequest(async (req, res) => {
         const repRef = userRef.collection('repogotchis').doc(repository);
         const repogotchi = await repRef.get();
         if (!repogotchi.exists) {
-            res.json({ result: 'repogotchi not registered' })
+            res.json({ result: 'repogotchi not registered' });
         } else {
             // update the last-updated
-            await repRef.update({ last_commit: lastupdated })
+            await repRef.update({ last_commit: lastUpdated });
             // add commits to the repogotchi's commit list
-            for (var commit in commitList) {
-                var jsonCommit = JSON.parse(commit)
-                repRef.collection('commits').add({ id: jsonCommit.commit_id, time: jsonCommit.timestamp })
+            for (var commitIndex in commitList) {
+                var commit = commitList[commitIndex];
+                var commitTimeMS = Date.parse(commit.timestamp);
+                // Only add commits where the commit is distinct and the commit's author is the same as the pusher
+                if (commit.distinct && commit.author.name === username) {
+                    await repRef.collection('commits').add(
+                        { id: commit.id, time: admin.firestore.Timestamp.fromMillis(commitTimeMS) });
+                }
             }
             res.json({ result: 'success ' })
         }
