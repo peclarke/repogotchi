@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import wiz2 from '../assets/wiz_2.png';
@@ -36,7 +36,13 @@ export type WizardDialogProps = {
 
 export default function WizardDialog(props: WizardDialogProps) {
     const [page, setPage] = useState(0);
-    const {width, height} = useWindowDimensions();
+    const {width} = useWindowDimensions();
+
+    useEffect(() => {
+        if (props.open) {
+            setPage(0);
+        }
+    }, [props.open]);
 
     return (
         <ThemeProvider theme={theme}>
