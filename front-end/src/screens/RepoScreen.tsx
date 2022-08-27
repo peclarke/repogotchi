@@ -48,7 +48,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         const app = initializeApp(firebaseConfig);
         const db: Firestore = getFirestore(app);
 
-        console.log("users/peclarke/repogotchis/" + id)
+        // console.log("users/peclarke/repogotchis/" + id)
 
         const stuff = async () => {
             const docRef = doc(db, "users/peclarke/repogotchis/" + id);

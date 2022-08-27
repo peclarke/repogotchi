@@ -10,6 +10,8 @@ import CodeIcon from '@mui/icons-material/Code';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 const theme = createTheme();
 
@@ -37,10 +39,17 @@ export type Commit = {
 
 export default function Details(props: DetailsProps) {
     const [commits, setCommits] = useState<Commit[]>([]);
+    const [langs, setLangs] = useState<string[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const { id } = useParams();
+    const {width, height} = useWindowDimensions();
 
-    useEffect(() => get_commits(), []);
+    useEffect(() => {
+        setLoading(true);
+        get_commits();
+        get_langs()
+    }, []);
 
     const get_commits = () => {
         const url = "https://api.github.com/repos/peclarke/" + id + "/commits";
@@ -74,45 +83,61 @@ export default function Details(props: DetailsProps) {
 
             }, (err) => console.log(err))
     }
+
+    const get_langs = () => {
+        const baseUrl = "https://api.github.com/repos/" + 'peclarke' + "/" + id
+        fetch(baseUrl + "/languages")
+            .then(res => res.json())
+            .then((jsonLang) => {
+                setLangs(Object.keys(jsonLang));
+                setLoading(false);
+            }, (err) => console.log(err))
+    }
     return (
         <ThemeProvider theme={theme}>
             <Box display="flex" alignItems="center" justifyContent="center" sx = {{ mt: 5 }}>
                 <Paper elevation={3} sx = {{ width: '80%', height: '100%', p: 2 }}>
-                    <Typography variant="h5">Languages</Typography>
-                    <List dense={false}>
-                        {
-                        props.languages.map((language, index) => {
-                            return (
-                                <ListItem key={index}>
-                                    <ListItemIcon>
-                                        <CodeIcon />
-                                    </ListItemIcon>
-                                    <ListItemText>{language}</ListItemText>
-                                </ListItem>
-                            )
-                        })
-                        }
-                    </List>
-                    <br></br>
-                    <Typography variant="h5" sx={{mt: 5}}>Most Recent Commits</Typography>
-                    <List dense={false}>
-                        {
-                        commits.map((commit, index) => {
-                            return (
-                                <a href={commit.url} target="_" style={{ textDecoration: 'none', color: 'black'}}>
-                                    <ListItem key={index}>
-                                        <ListItemIcon>
-                                            <GitHubIcon />
-                                        </ListItemIcon>
-                                        <ListItemText>
-                                            {commit.msg}
-                                        </ListItemText>
-                                    </ListItem>
-                                </a>
-                            )
-                        })
-                        }
-                    </List>
+                    {
+                    !loading  
+                        ? <>
+                            <Typography variant="h5">Languages</Typography>
+                            <List dense={false}>
+                                {
+                                langs.map((language, index) => {
+                                    return (
+                                        <ListItem key={index}>
+                                            <ListItemIcon>
+                                                <CodeIcon />
+                                            </ListItemIcon>
+                                            <ListItemText>{language}</ListItemText>
+                                        </ListItem>
+                                    )
+                                })
+                                }
+                            </List>
+                            <br></br>
+                            <Typography variant="h5" sx={{mt: 5}}>Most Recent Commits</Typography>
+                            <List dense={false}>
+                                {
+                                commits.map((commit, index) => {
+                                    return (
+                                        <a href={commit.url} target="_" style={{ textDecoration: 'none', color: 'black'}}>
+                                            <ListItem key={index}>
+                                                <ListItemIcon>
+                                                    <GitHubIcon />
+                                                </ListItemIcon>
+                                                <ListItemText>
+                                                    {commit.msg}
+                                                </ListItemText>
+                                            </ListItem>
+                                        </a>
+                                    )
+                                })
+                                }
+                            </List>
+                        </>
+                        : <Box display="flex" justifyContent="center" alignContent="center" height={height * 0.5}><CircularProgress size={90} sx = {{mt: 15}}/></Box>
+                    }
                 </Paper>
             </Box>
         </ThemeProvider>
