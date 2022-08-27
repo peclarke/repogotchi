@@ -76,12 +76,12 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
 });
 
 async function decay() {
-    const users = await admin.firestore().collection('users').get();
+    const users = await admin.firestore().collection("users").get();
     const now = await admin.firestore.Timestamp.now().toDate();
 
     users.forEach(async (user) => {
 
-        let repogotchis = await user.ref.collection('repogotchis').get();
+        let repogotchis = await user.ref.collection("repogotchis").get();
         repogotchis.forEach(async (rep) => {
             // Decay repogotchi health
             let data = rep.data();
@@ -107,12 +107,12 @@ async function decay() {
     });
 }
 
-exports.decayOnDemand = functions.region("australia-southeast1").https.onRequest(async (req, res) => {
+exports.decayOnDemand = functions.region("australia-southeast1").https.onRequest(async (_, res) => {
     await decay();
     res.json({ result: "done" });
 });
 
-exports.decayDaily = functions.region("australia-southeast1").pubsub.schedule("0 1 * * *").onRun(async (context) => {
+exports.decayDaily = functions.region("australia-southeast1").pubsub.schedule("0 1 * * *").onRun(async (_) => {
     await decay();
     return null;
 });
