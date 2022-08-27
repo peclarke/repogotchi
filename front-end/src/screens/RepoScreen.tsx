@@ -5,12 +5,14 @@ import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
 import Details from '../components/Details';
 import Repogotchi from '../components/Repogotchi';
+import { useParams } from 'react-router-dom';
 
 export type RepoScreenProps = {
 
 }
 
 export default function RepoScreen(props: RepoScreenProps) {
+    const { id } = useParams();
 
     // const [progressBars, setProgressBars] = useState([]);
 

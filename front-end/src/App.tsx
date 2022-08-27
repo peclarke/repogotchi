@@ -13,7 +13,7 @@ function App() {
         <Routes>
           {/* <Route path="/repo"><RepoScreen /></Route>
           <Route path="/"><RepoListScreen /></Route> */}
-          <Route path="/repo" element={<RepoScreen />}></Route>
+          <Route path="/repo/:id" element={<RepoScreen />}></Route>
           <Route path="/" element={<RepoListScreen />}></Route>
         </Routes>
       </Router>
