@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import ProgressBars from '../components/progress/ProgressBars';
@@ -7,30 +7,58 @@ import Details from '../components/Details';
 import Repogotchi from '../components/Repogotchi';
 import { useParams } from 'react-router-dom';
 
+import { initializeApp } from 'firebase/app';
+import { Firestore, getFirestore, collection, getDoc, doc } from 'firebase/firestore/lite';
+import { firebaseConfig } from '../config/firebase';
+import { RepogotchiType } from '../state/repo';
+
 export type RepoScreenProps = {
 
 }
 
 export default function RepoScreen(props: RepoScreenProps) {
+    const [rep, setRep] = useState<RepogotchiType>({
+        GithubName:   "",
+        PersonalName: "",
+        Age:          "",
+        Languages:    [""],
+        MaxHealth:    100,
+        CurrentHealth: 100,
+        CommitProgress: 100,
+        LastCommit:     ""
+    });
+
     const { id } = useParams();
 
-    // const [progressBars, setProgressBars] = useState([]);
+    useEffect(() => {
+        getInfo();
+    }, [])
 
-    // useEffect(() => {
-    //     const health = {
-    //         "title": "Health",
-    //         "bio": "Ability to meet your contribution goals",
-    //         "progress": 40
-    //     }
+    const getInfo = async () => {
+        const app = initializeApp(firebaseConfig);
+        const db: Firestore = getFirestore(app);
 
-    //     const emotion = {
-    //         "title": "Emotional Wellbeing",
-    //         "bio": "Consistent contributions to your repository",
-    //         "progress": 80
-    //     }
+        console.log("users/peclarke/repogotchis/" + id)
 
-    //     setProgressBars([health, emotion])
-    // }, [])
+        const stuff = async () => {
+            const docRef = doc(db, "users/peclarke/repogotchis/" + id);
+            const snapDoc = await getDoc(docRef);
+            const data = snapDoc.data();
+            if (data) {
+                setRep({
+                    GithubName:   data.GithubName,
+                    PersonalName: data.PersonalName,
+                    Age:          data.Age,
+                    Languages:    data.Languages,
+                    MaxHealth:    data.MaxHealth,
+                    CurrentHealth:data.CurrentHealth,
+                    CommitProgress: data.CommitProgress,
+                    LastCommit:     data.LastCommit
+                })
+            }
+        }
+        stuff();
+    }
 
     return (
         <>
@@ -39,17 +67,17 @@ export default function RepoScreen(props: RepoScreenProps) {
                 <Grid item xs={3}>
                     <Box sx = {{ ml: 5 }}>
                         <ProgressBars />
-                        <NameAge name="Bobbithy" age="12 months"/>
+                        <NameAge name={rep.PersonalName} age={rep.Age}/>
                     </Box>
                 </Grid>
                 <Grid item xs={5}>
                     <Box sx = {{ ml: 5 }}>
-                        <Repogotchi name="Functional-Programming-Assignment" commits={5} goal={10} />
+                        <Repogotchi name={rep.GithubName} commits={5} goal={10} />
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }}>
-                        <Details languages={["Python", "JavaScript", "HTML", "CSS", "Typescript", "Bash"]}/>
+                        <Details languages={rep.Languages}/>
                     </Box>
                 </Grid>
             </Grid>

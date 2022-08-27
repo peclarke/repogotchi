@@ -9,8 +9,8 @@ export type ProgressBarsProps = {
 export default function ProgressBars() {
     return (
         <Box>
-            <Progress title="Health" bio="Ability to meet your contribution goals" progress={40}/>
-            <Progress title="Emotional Wellbeing" bio="Consistent contributions to your repository" progress={80}/>
+            <Progress title="Health" bio="Make commits often to keep their health up" progress={40}/>
+            <Progress title="Affection" bio="Regular visits improve their affection to you " progress={80}/>
         </Box>
     )
 }

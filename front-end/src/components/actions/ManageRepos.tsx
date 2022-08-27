@@ -9,7 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs } from 'firebase/firestore/lite';
 
 export type ManageReposProps = {
-
+    updateRepos: () => void;
 }
 
 export default function ManageRepos(props: ManageReposProps) {
@@ -49,8 +49,8 @@ export default function ManageRepos(props: ManageReposProps) {
                             PersonalName: "Bobbithy",
                             Age: new Date(json['created_at']).toDateString(),
                             Languages: Object.keys(jsonLang),
-                            HealthPercent: 100,
-                            WellbePercent: 100,
+                            MaxHealth: 100,
+                            CurrentHealth: 100,
                             CommitProgress: 100,
                             LastCommit: ""
                         }
@@ -60,6 +60,7 @@ export default function ManageRepos(props: ManageReposProps) {
                             const repoDoc = doc(db, "users/peclarke/repogotchis", json['name'])
                             // const docRef = await addDoc(repoCol, repo);
                             const docRef = await setDoc(repoDoc, repo)
+                            props.updateRepos();
                         }
 
                         userStuff();

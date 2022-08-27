@@ -3,8 +3,8 @@ export type RepogotchiType = {
     PersonalName:   string;
     Age:            string;
     Languages:      string[];
-    HealthPercent:  number;
-    WellbePercent:  number;
+    MaxHealth:      number;
+    CurrentHealth:  number;
     CommitProgress: number;
     LastCommit:     string;
 }

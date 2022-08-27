@@ -5,6 +5,8 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Progress from '../progress/Progress';
+import { RepogotchiType } from '../../state/repo';
+import { useParams } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -16,11 +18,13 @@ theme.typography.h5 = {
 
 
 export type RepoListItemProps = {
-    
+    repo: RepogotchiType
 }
 
 export default function RepoListItem(props: RepoListItemProps) {
     const [elevation, setElevation] = useState(10);
+
+    const healthPercent = Math.ceil(props.repo.CurrentHealth / props.repo.MaxHealth) * 100;
 
     return (
         <ThemeProvider theme={theme}>
@@ -30,16 +34,16 @@ export default function RepoListItem(props: RepoListItemProps) {
             >
                 <Box sx = {{ display: 'flex', flexDirection: 'row' }}>
                     <Avatar sx={{ width: 130, height: 130, ml: -8, mt: -5 }}/>
-                    <Box sx = {{ ml: 4 }}>
-                        <Typography variant="h5">RepositoryOfficialName</Typography>
-                        <Typography>RepoPersonalName</Typography>
+                    <Box sx = {{ ml: 4, width: 800 }}>
+                        <Typography variant="h5">{props.repo.GithubName}</Typography>
+                        <Typography>{props.repo.PersonalName}</Typography>
                     </Box>
                     <Box display="flex" flexDirection="row" sx = {{ width: '100%', mt: -1, ml: 3}}>
-                        <Box sx = {{ width: '40%'}}>
+                        <Box sx = {{ width: '60%'}}>
                             <Progress title="" bio="Commit Goal Progress" progress={40}/>
                         </Box>
                         <Box sx = {{ width: '40%'}}>
-                            <Progress title="" bio="Repo Health" progress={80}/>
+                            <Progress title="" bio="Repo Health" progress={healthPercent}/>
                         </Box>
                     </Box>
                 </Box>
