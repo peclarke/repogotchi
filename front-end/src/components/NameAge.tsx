@@ -51,7 +51,7 @@ export default function NameAge(props: NameAgeProps) {
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" alignItems="left" justifyContent="left">
-                                <Typography variant="h6">{props.age}</Typography>
+                                <Typography variant="h6">{props.age} Days</Typography>
                             </Box>
                         </Grid>
                     </Grid>

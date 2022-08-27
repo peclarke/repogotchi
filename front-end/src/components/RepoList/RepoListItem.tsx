@@ -25,6 +25,7 @@ export default function RepoListItem(props: RepoListItemProps) {
     const [elevation, setElevation] = useState(10);
 
     const healthPercent = Math.ceil(props.repo.CurrentHealth / props.repo.MaxHealth) * 100;
+    const affPercent = Math.ceil(props.repo.Affection / props.repo.MaxAffection) * 100;
 
     return (
         <ThemeProvider theme={theme}>
@@ -39,11 +40,11 @@ export default function RepoListItem(props: RepoListItemProps) {
                         <Typography>{props.repo.PersonalName}</Typography>
                     </Box>
                     <Box display="flex" flexDirection="row" sx = {{ width: '100%', mt: -1, ml: 3}}>
-                        <Box sx = {{ width: '60%'}}>
-                            <Progress title="" bio="Commit Goal Progress" progress={40}/>
+                        <Box sx = {{ width: '50%'}}>
+                            <Progress title="" bio="Health" progress={healthPercent}/>
                         </Box>
-                        <Box sx = {{ width: '40%'}}>
-                            <Progress title="" bio="Repo Health" progress={healthPercent}/>
+                        <Box sx = {{ width: '50%'}}>
+                            <Progress title="" bio="Affection" progress={affPercent}/>
                         </Box>
                     </Box>
                 </Box>

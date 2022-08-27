@@ -56,9 +56,9 @@ export default function ManageRepos(props: ManageReposProps) {
                             Level: 1,
                             Birthdate: new Date(json['created_at']).toDateString(),
                             LevelProgress: 0,
-                            LevelReq: 0,
+                            LevelReq: 20,
                             LastVisit: "",
-                            Affection: 0,
+                            Affection: 10,
                             MaxAffection: 10,
                         }
 

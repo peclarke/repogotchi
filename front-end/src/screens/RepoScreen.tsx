@@ -5,12 +5,14 @@ import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
 import Details from '../components/Details';
 import Repogotchi from '../components/Repogotchi';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, collection, getDoc, doc } from 'firebase/firestore/lite';
 import { firebaseConfig } from '../config/firebase';
 import { RepogotchiType } from '../state/repo';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
 
 export type RepoScreenProps = {
 
@@ -80,13 +82,19 @@ export default function RepoScreen(props: RepoScreenProps) {
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     <Box sx = {{ ml: 5 }}>
-                        <ProgressBars />
+                        <Box display="flex" alignItems="center" justifyContent="space-evenly" sx = {{ mt: 5}}>
+                            <Link to="/" style = {{ textDecoration: "none"}}><Button variant="contained">Back</Button></Link>
+                            <Button variant="contained">Settings</Button>
+                        </Box>
+                        <br></br>
+                        <hr style = {{ opacity: 0.4}}></hr>
+                        <ProgressBars repo={rep}/>
                         <NameAge name={rep.PersonalName} age={rep.Age}/>
                     </Box>
                 </Grid>
                 <Grid item xs={5}>
                     <Box sx = {{ ml: 5 }}>
-                        <Repogotchi name={rep.GithubName} commits={5} goal={10} />
+                        <Repogotchi name={rep.GithubName} repo={rep} />
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
