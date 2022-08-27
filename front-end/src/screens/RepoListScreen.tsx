@@ -28,7 +28,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <Box sx = {{ ml: 5 }}>
+                    <Box sx = {{ ml: 5 }} >
                         <ManageRepos />
                     </Box>
                 </Grid>
