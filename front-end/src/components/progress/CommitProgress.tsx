@@ -37,12 +37,15 @@ export type CommitProgressProps = {
 }
 
 export default function CommitProgress(props: CommitProgressProps) {
+
+    const progress = Math.floor((props.repo.LevelProgress / props.repo.LevelReq) * 100)
+
     return (
         <ThemeProvider theme={theme}>
             <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
                 <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: 1</Typography>
                 <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>{props.repo.LevelProgress} / {props.repo.LevelReq} XP</Typography>
-                <BorderLinearProgress variant="determinate" value={props.progress} />
+                <BorderLinearProgress variant="determinate" value={progress} />
             </Box>
         </ThemeProvider>
     )

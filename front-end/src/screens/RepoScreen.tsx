@@ -8,7 +8,7 @@ import Repogotchi from '../components/Repogotchi';
 import { Link, useParams } from 'react-router-dom';
 
 import { initializeApp } from 'firebase/app';
-import { Firestore, getFirestore, collection, getDoc, doc } from 'firebase/firestore/lite';
+import { Firestore, getFirestore, collection, getDoc, doc, setDoc, updateDoc } from 'firebase/firestore/lite';
 import { firebaseConfig } from '../config/firebase';
 import { RepogotchiType } from '../state/repo';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -81,7 +81,21 @@ export default function RepoScreen(props: RepoScreenProps) {
 
 
     const updatePersonalName = async (text: string) => {
+        const app = initializeApp(firebaseConfig);
+        const db: Firestore = getFirestore(app);
 
+        setRep({
+            ...rep,
+            PersonalName: text
+        });
+
+        // update firebase
+        const docRef = doc(db, "users/peclarke/repogotchis/" + id);
+        await updateDoc(docRef, {
+            PersonalName: text
+        })
+        
+        
     }
 
     return (
