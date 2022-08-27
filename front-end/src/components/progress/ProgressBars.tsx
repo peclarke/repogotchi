@@ -14,7 +14,7 @@ export default function ProgressBars(props: ProgressBarsProps) {
     const affPercent = Math.ceil(props.repo.Affection / props.repo.MaxAffection) * 100;
 
     return (
-        <Paper elevation={10} sx = {{pb: 2}}>
+        <Paper elevation={10} sx = {{pb: 2, width: '80%', ml: 5, mt: 5}}>
             <Box>
                 <Progress title="Health" bio="Make commits often to keep their health up" progress={healthPercent}/>
                 <Progress title="Affection" bio="Regular visits improve their affection to you " progress={affPercent}/>
