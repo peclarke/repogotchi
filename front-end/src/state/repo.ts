@@ -6,4 +6,5 @@ export type RepogotchiType = {
     HealthPercent:  number;
     WellbePercent:  number;
     CommitProgress: number;
+    LastCommit:     string;
 }

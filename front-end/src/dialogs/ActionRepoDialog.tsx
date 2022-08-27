@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useState } from 'react';
 
 const theme = createTheme();
 
@@ -19,11 +19,22 @@ theme.typography.h5 = {
 export type ActionRepoDialogProps = {
     open:    boolean;
     onClose: () => void;
-    action: () => void;
+    action:  (txt: string) => void;
     type:    "add" | "remove";
 }
 
 export default function ActionRepoDialog(props: ActionRepoDialogProps) {
+    const [text, setText] = useState("");
+
+    const updateText = (e: any) => {
+        setText(e.target.value);
+    }
+
+    const buttonClicked = () => {
+        props.action(text)
+        props.onClose();
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Dialog onClose={props.onClose} open={props.open}>
@@ -38,8 +49,8 @@ export default function ActionRepoDialog(props: ActionRepoDialogProps) {
                         }
                     </Typography>
                     <Box sx = {{ mt: 2, display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: 110 }}>
-                        <TextField id="repo-dialog-input" label={props.type === "add" ? "Repository URL" : "Repository Name"} variant="outlined" sx = {{ width: "100%"}} />
-                        <Button variant="contained" onClick={props.action} sx = {{ width: "45%"}}>{props.type === "add" ? "Add Repository" : "Remove Repository" }</Button>
+                        <TextField onChange={updateText} id="repo-dialog-input" label={props.type === "add" ? "Repository URL" : "Repository Name"} variant="outlined" sx = {{ width: "100%"}} />
+                        <Button variant="contained" onClick={buttonClicked} sx = {{ width: "45%"}}>{props.type === "add" ? "Add Repository" : "Remove Repository" }</Button>
                     </Box>
                 </DialogContent>
             </Dialog>
