@@ -4,6 +4,10 @@ import ActionRepoDialog from '../../dialogs/ActionRepoDialog';
 import { RepogotchiType } from '../../state/repo';
 import BigButton from './BigButton';
 
+import { firebaseConfig } from '../../config/firebase';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs } from 'firebase/firestore/lite';
+
 export type ManageReposProps = {
 
 }
@@ -22,9 +26,13 @@ export default function ManageRepos(props: ManageReposProps) {
         setDialogOpen(true);
     }
 
-    useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
+    // useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
+    useEffect(() => add_repo("https://github.com/peclarke/fullstack-forum"), [])
 
-    const get_repo_info = (githubUrl: string) => {
+    const add_repo = (githubUrl: string) => {
+        const app = initializeApp(firebaseConfig);
+        const db: Firestore = getFirestore(app);
+
         const delimited = githubUrl.split("/").reverse();
         const repoName = delimited[0];
         const username = delimited[1];
@@ -45,7 +53,13 @@ export default function ManageRepos(props: ManageReposProps) {
                             WellbePercent: 100,
                             CommitProgress: 100
                         }
-                        return repo;
+
+                        const userStuff = async () => {
+                            const repoCol = collection(db, "users/peclarke/repogotchis");
+                            const docRef = await addDoc(repoCol, repo);
+                        }
+
+                        userStuff();
                     }, (err) => {
                         console.log(err)
                 })
