@@ -6,7 +6,7 @@ import BigButton from './BigButton';
 
 import { firebaseConfig } from '../../config/firebase';
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs, deleteDoc } from 'firebase/firestore/lite';
 import WizardDialog from '../../dialogs/WizardDialog';
 
 export type ManageReposProps = {
@@ -28,6 +28,14 @@ export default function ManageRepos(props: ManageReposProps) {
     const openRemoveRepo = () => {
         setDialogType("remove");
         setDialogOpen(true);
+    }
+
+    const handleAction = (res: string) => {
+        if (dialogType === "add") {
+            add_repo(res);
+        } else {
+            remove_repo(res);
+        }
     }
 
     // useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
@@ -85,11 +93,24 @@ export default function ManageRepos(props: ManageReposProps) {
         })
     }
 
+    const remove_repo = (githubName: string) => {
+        const app = initializeApp(firebaseConfig);
+        const db: Firestore = getFirestore(app);
+
+        const stuff = async () => {
+            const docRef = doc(db, "users/peclarke/repogotchis/" + githubName);
+            await deleteDoc(docRef);
+            props.updateRepos();
+        }
+        
+        stuff();
+    }
+
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             {props.allowAdds ? <BigButton action={openAddRepo} type="add"/> : null }
             <BigButton action={openRemoveRepo} type="remove"/>
-            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => add_repo(text)}/>
+            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => handleAction(text)}/>
             <WizardDialog open={wizard} onClose={() => setWizard(false)}/>
         </Box>
     )
