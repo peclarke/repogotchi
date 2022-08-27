@@ -5,15 +5,12 @@ import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
 import Details from '../components/Details';
 import Repogotchi from '../components/Repogotchi';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { initializeApp } from 'firebase/app';
-import { Firestore, getFirestore, collection, getDoc, doc, setDoc, updateDoc } from 'firebase/firestore/lite';
+import { Firestore, getFirestore, getDoc, doc, updateDoc } from 'firebase/firestore/lite';
 import { firebaseConfig } from '../config/firebase';
 import { RepogotchiType } from '../state/repo';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import RepoSettingsDialog from '../dialogs/RepoSettingsDialog';
 import RepoButtons from '../components/RepoButtons';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 
@@ -56,7 +53,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         const app = initializeApp(firebaseConfig);
         const db: Firestore = getFirestore(app);
 
-        console.log("users/peclarke/repogotchis/" + id)
+        // console.log("users/peclarke/repogotchis/" + id)
 
         const stuff = async () => {
             const docRef = doc(db, "users/peclarke/repogotchis/" + id);

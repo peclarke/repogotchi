@@ -24,8 +24,8 @@ export type RepoListItemProps = {
 export default function RepoListItem(props: RepoListItemProps) {
     const [elevation, setElevation] = useState(10);
 
-    const healthPercent = Math.ceil(props.repo.CurrentHealth / props.repo.MaxHealth) * 100;
-    const affPercent = Math.ceil(props.repo.Affection / props.repo.MaxAffection) * 100;
+    const healthPercent = Math.floor(props.repo.CurrentHealth / props.repo.MaxHealth * 100);
+    const affPercent = Math.floor(props.repo.Affection / props.repo.MaxAffection * 100);
 
     return (
         <ThemeProvider theme={theme}>
