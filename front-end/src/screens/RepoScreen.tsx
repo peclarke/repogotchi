@@ -113,7 +113,7 @@ export default function RepoScreen(props: RepoScreenProps) {
                 </Grid>
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5, background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pt: 5 }}>
-                        <Details languages={rep.Languages}/>
+                        <Details languages={rep.Languages} />
                     </Box>
                 </Grid>
             </Grid>
