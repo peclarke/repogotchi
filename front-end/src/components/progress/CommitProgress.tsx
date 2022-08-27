@@ -40,7 +40,8 @@ export default function CommitProgress(props: CommitProgressProps) {
     return (
         <ThemeProvider theme={theme}>
             <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
-                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Commit Progress</Typography>
+                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: 1</Typography>
+                <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>12 / 20 XP</Typography>
                 <BorderLinearProgress variant="determinate" value={progress} />
             </Box>
         </ThemeProvider>

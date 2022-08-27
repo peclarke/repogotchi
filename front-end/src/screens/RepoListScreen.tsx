@@ -39,7 +39,14 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     MaxHealth:    data.MaxHealth,
                     CurrentHealth:data.CurrentHealth,
                     CommitProgress: data.CommitProgress,
-                    LastCommit:     data.LastCommit
+                    LastCommit:     data.LastCommit,
+                    Level: data.Level,
+                    Birthdate: data.Birthdate,
+                    LevelProgress: data.LevelProgress,
+                    LevelReq: data.LevelReq,
+                    LastVisit: data.LastVisit,
+                    Affection: data.Affection,
+                    MaxAffection: data.MaxAffection,
                 }
             });
             console.log(repoData);

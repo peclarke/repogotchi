@@ -47,12 +47,19 @@ export default function ManageRepos(props: ManageReposProps) {
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
                             PersonalName: "Bobbithy",
-                            Age: new Date(json['created_at']).toDateString(),
+                            Age: "0",
                             Languages: Object.keys(jsonLang),
                             MaxHealth: 100,
                             CurrentHealth: 100,
                             CommitProgress: 100,
-                            LastCommit: ""
+                            LastCommit: "",
+                            Level: 1,
+                            Birthdate: new Date(json['created_at']).toDateString(),
+                            LevelProgress: 0,
+                            LevelReq: 0,
+                            LastVisit: "",
+                            Affection: 0,
+                            MaxAffection: 10,
                         }
 
                         const userStuff = async () => {

@@ -25,7 +25,14 @@ export default function RepoScreen(props: RepoScreenProps) {
         MaxHealth:    100,
         CurrentHealth: 100,
         CommitProgress: 100,
-        LastCommit:     ""
+        LastCommit:     "",
+        Level: 0,
+        Birthdate: "",
+        LevelProgress: 0,
+        LevelReq: 0,
+        LastVisit: "",
+        Affection: 0,
+        MaxAffection: 0,
     });
 
     const { id } = useParams();
@@ -53,7 +60,14 @@ export default function RepoScreen(props: RepoScreenProps) {
                     MaxHealth:    data.MaxHealth,
                     CurrentHealth:data.CurrentHealth,
                     CommitProgress: data.CommitProgress,
-                    LastCommit:     data.LastCommit
+                    LastCommit:     data.LastCommit,
+                    Level: data.Level,
+                    Birthdate: data.Birthdate,
+                    LevelProgress: data.LevelProgress,
+                    LevelReq: data.LevelReq,
+                    LastVisit: data.LastVisit,
+                    Affection: data.Affection,
+                    MaxAffection: data.MaxAffection,
                 })
             }
         }

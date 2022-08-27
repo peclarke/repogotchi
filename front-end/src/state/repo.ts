@@ -7,4 +7,12 @@ export type RepogotchiType = {
     CurrentHealth:  number;
     CommitProgress: number;
     LastCommit:     string;
+    // New Fields
+    Level: number;
+    Birthdate: string;
+    LevelProgress: number;
+    LevelReq: number;
+    LastVisit: string;
+    Affection: number;
+    MaxAffection: number;
 }
