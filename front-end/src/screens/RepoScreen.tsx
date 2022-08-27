@@ -14,6 +14,8 @@ import { RepogotchiType } from '../state/repo';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import RepoSettingsDialog from '../dialogs/RepoSettingsDialog';
+import RepoButtons from '../components/RepoButtons';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export type RepoScreenProps = {
 
@@ -37,8 +39,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         Affection: 0,
         MaxAffection: 0,
     });
-
-    const [settings, setSettings] = useState(false);
+    const { height } = useWindowDimensions();
 
     const { id } = useParams();
 
@@ -79,7 +80,6 @@ export default function RepoScreen(props: RepoScreenProps) {
         stuff();
     }
 
-
     const updatePersonalName = async (text: string) => {
         const app = initializeApp(firebaseConfig);
         const db: Firestore = getFirestore(app);
@@ -102,20 +102,14 @@ export default function RepoScreen(props: RepoScreenProps) {
         <>
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    <Box sx = {{ ml: 5 }}>
-                        <Box display="flex" alignItems="center" justifyContent="space-evenly" sx = {{ mt: 5}}>
-                            <Link to="/" style = {{ textDecoration: "none"}}><Button variant="contained">Back</Button></Link>
-                            <Button onClick={() => setSettings(true)} variant="contained">Settings</Button>
-                            <RepoSettingsDialog open={settings} onClose={() => setSettings(false)} action={(text: string) => updatePersonalName(text)}/>
-                        </Box>
-                        <br></br>
-                        <hr style = {{ opacity: 0.4}}></hr>
+                <Grid item xs={4}>
+                    <Box sx = {{ background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pl: 5, pr: 5 }}>
+                        <RepoButtons updateName={updatePersonalName}/>
                         <ProgressBars repo={rep}/>
                         <NameAge name={rep.PersonalName} age={rep.Age}/>
                     </Box>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }}>
                         <Repogotchi name={rep.GithubName} repo={rep} />
                     </Box>

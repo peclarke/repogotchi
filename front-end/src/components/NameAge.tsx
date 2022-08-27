@@ -30,7 +30,7 @@ export type NameAgeProps = {
 export default function NameAge(props: NameAgeProps) {
     return (
         <ThemeProvider theme={theme}>
-            <Paper elevation={3} sx = {{ width: '80%', height: '100%', ml: 5, mt: 8 }}>
+            <Paper elevation={10} sx = {{ width: '80%', ml: 5, mt: 8, pb: 2 }}>
                 <Typography variant="h5" sx = {{ pt: 3, pl: 3 }}>Basic View</Typography>
                 <Box display="flex" alignItems="center" justifyContent="center" sx = {{ pl: 3, pr: 2, pb: 3, pt: 2 }}>
                     <Grid container>
