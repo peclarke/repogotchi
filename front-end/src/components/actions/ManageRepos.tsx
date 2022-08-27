@@ -60,6 +60,11 @@ export default function ManageRepos(props: ManageReposProps) {
                             LastVisit: "",
                             Affection: 10,
                             MaxAffection: 10,
+                            Body: 0,
+                            Eyes: 0,
+                            Mouth: 0,
+                            Accessory: 0,
+                            Ears: 0,
                         }
 
                         const userStuff = async () => {
@@ -73,17 +78,17 @@ export default function ManageRepos(props: ManageReposProps) {
                         userStuff();
                     }, (err) => {
                         console.log(err)
-                })
+                    })
             }, (err) => {
                 console.log(err)
-        })
+            })
     }
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-            <BigButton action={openAddRepo} type="add"/>
-            <BigButton action={openRemoveRepo} type="remove"/>
-            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => add_repo(text)}/>
+            <BigButton action={openAddRepo} type="add" />
+            <BigButton action={openRemoveRepo} type="remove" />
+            <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => add_repo(text)} />
         </Box>
     )
 }

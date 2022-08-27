@@ -10,7 +10,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { RepogotchiType } from '../state/repo';
 
 export type RepoListScreenProps = {
-    
+
 }
 
 export default function RepoListScreen(props: RepoListScreenProps) {
@@ -31,15 +31,15 @@ export default function RepoListScreen(props: RepoListScreenProps) {
             const repoDocs = await getDocs(repoCol);
             const repoData: RepogotchiType[] = repoDocs.docs.map((doc) => {
                 const data = doc.data();
-                 return {
+                return {
                     GithubName: data.GithubName,
                     PersonalName: data.PersonalName,
-                    Age:          data.Age,
-                    Languages:    data.Languages,
-                    MaxHealth:    data.MaxHealth,
-                    CurrentHealth:data.CurrentHealth,
+                    Age: data.Age,
+                    Languages: data.Languages,
+                    MaxHealth: data.MaxHealth,
+                    CurrentHealth: data.CurrentHealth,
                     CommitProgress: data.CommitProgress,
-                    LastCommit:     data.LastCommit,
+                    LastCommit: data.LastCommit,
                     Level: data.Level,
                     Birthdate: data.Birthdate,
                     LevelProgress: data.LevelProgress,
@@ -47,6 +47,11 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     LastVisit: data.LastVisit,
                     Affection: data.Affection,
                     MaxAffection: data.MaxAffection,
+                    Body: data.Body,
+                    Eyes: data.Eyes,
+                    Mouth: data.Mouth,
+                    Accessory: data.Accessory,
+                    Ears: data.Ears
                 }
             });
             console.log(repoData);
@@ -59,24 +64,26 @@ export default function RepoListScreen(props: RepoListScreenProps) {
 
     return (
         <>
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-                <Grid item xs={8}>
-                    <Box sx = {{ justifyContent: 'space-evenly', display: 'flex',
-                                 flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
-                                 paddingLeft: 4, paddingRight: 4}}>
-                        {/* Render this with a proper list element from mui. Only allow 5 repogotchis  */}
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <Box sx={{
+                            justifyContent: 'space-evenly', display: 'flex',
+                            flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
+                            paddingLeft: 4, paddingRight: 4
+                        }}>
+                            {/* Render this with a proper list element from mui. Only allow 5 repogotchis  */}
 
-                        <RepoList repos={repos}/>
-                    </Box>
+                            <RepoList repos={repos} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Box sx={{ ml: 5 }} >
+                            <ManageRepos updateRepos={getUserRepos} />
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                    <Box sx = {{ ml: 5 }} >
-                        <ManageRepos updateRepos={getUserRepos}/>
-                    </Box>
-                </Grid>
-            </Grid>
-        </Box>
+            </Box>
         </>
     )
 }
