@@ -7,13 +7,17 @@ import BigButton from './BigButton';
 import { firebaseConfig } from '../../config/firebase';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs } from 'firebase/firestore/lite';
+import WizardDialog from '../../dialogs/WizardDialog';
 
 export type ManageReposProps = {
     updateRepos: () => void;
+    allowAdds: boolean;
 }
 
 export default function ManageRepos(props: ManageReposProps) {
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [wizard, setWizard] = useState(false);
+
     const [dialogType, setDialogType] = useState<"add" | "remove">("add");
 
     const openAddRepo = () => {
@@ -30,6 +34,8 @@ export default function ManageRepos(props: ManageReposProps) {
     // useEffect(() => add_repo("https://github.com/peclarke/fullstack-forum"), [])
 
     const add_repo = (githubUrl: string) => {
+        setWizard(true);
+
         const app = initializeApp(firebaseConfig);
         const db: Firestore = getFirestore(app);
 
@@ -81,9 +87,10 @@ export default function ManageRepos(props: ManageReposProps) {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-            <BigButton action={openAddRepo} type="add"/>
+            {props.allowAdds ? <BigButton action={openAddRepo} type="add"/> : null }
             <BigButton action={openRemoveRepo} type="remove"/>
             <ActionRepoDialog open={dialogOpen} onClose={() => setDialogOpen(false)} type={dialogType} action={(text: string) => add_repo(text)}/>
+            <WizardDialog open={wizard} onClose={() => setWizard(false)}/>
         </Box>
     )
 }
