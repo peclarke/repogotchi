@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes} from "react-router-dom";
+import LandingScreen from './screens/LandingScreen';
 
 import RepoListScreen from './screens/RepoListScreen';
 import RepoScreen from './screens/RepoScreen';
@@ -11,10 +12,9 @@ function App() {
   return (
       <Router>
         <Routes>
-          {/* <Route path="/repo"><RepoScreen /></Route>
-          <Route path="/"><RepoListScreen /></Route> */}
+          <Route path="/" element={<LandingScreen />}/>
           <Route path="/repo/:id" element={<RepoScreen />}></Route>
-          <Route path="/" element={<RepoListScreen />}></Route>
+          <Route path="/home" element={<RepoListScreen />}></Route>
         </Routes>
       </Router>
   );

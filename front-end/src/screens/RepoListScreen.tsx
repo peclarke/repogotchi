@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import React, { useEffect, useState } from 'react';
@@ -10,17 +11,22 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { RepogotchiType } from '../state/repo';
 
 export type RepoListScreenProps = {
-    
+
 }
 
 export default function RepoListScreen(props: RepoListScreenProps) {
     const { height } = useWindowDimensions();
 
     const [repos, setRepos] = useState<RepogotchiType[]>([]);
+    const [allow, setAllow] = useState(true);
 
     useEffect(() => {
         getUserRepos();
     }, [])
+
+    useEffect(() => {
+        setAllow(repos.length < 4);
+    }, [repos])
 
     const getUserRepos = async () => {
         const app = initializeApp(firebaseConfig);
@@ -58,7 +64,6 @@ export default function RepoListScreen(props: RepoListScreenProps) {
     }
 
     return (
-        <>
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={8}>
@@ -72,11 +77,11 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                 </Grid>
                 <Grid item xs={4}>
                     <Box sx = {{ ml: 5 }} >
-                        <ManageRepos updateRepos={getUserRepos}/>
+                        <Typography variant="h2" sx = {{ ml: 11, mt: 3}}>TamaGit</Typography>
+                        <ManageRepos updateRepos={getUserRepos} allowAdds={allow}/>
                     </Box>
                 </Grid>
             </Grid>
         </Box>
-        </>
     )
 }

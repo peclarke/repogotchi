@@ -17,7 +17,7 @@ export default function BigButton(props: BigButtonProps) {
             size="large" 
             onClick={props.action}
             startIcon={props.type === 'remove' ? <DeleteIcon /> : <AddIcon /> }
-            sx = {{ mt: 3, width:  width * 0.2}}
+            sx = {{ mt: 3, width:  width * 0.18}}
         >{ props.type === 'remove' ? "Remove Repository" : "Add Repository" }
         </Button>
     )

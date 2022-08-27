@@ -24,7 +24,7 @@ export default function RepoButtons(props: RepoButtonsType) {
     return (
             <ThemeProvider theme={theme}>
                 <Box display="flex" alignItems="center" justifyContent="space-evenly" sx = {{ mt: 5, pt: 5}}>
-                    <Link to="/" style = {{ textDecoration: "none"}}>
+                    <Link to="/home" style = {{ textDecoration: "none"}}>
                         <Button variant="contained" size="large">
                             <Typography variant="h5">Back</Typography>
                         </Button>
