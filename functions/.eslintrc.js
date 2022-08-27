@@ -8,6 +8,7 @@ module.exports = {
     "eslint:recommended",
   ],
   rules: {
+    "no-unused-vars": "off",
     quotes: ["error", "double"],
   },
   parserOptions: {
