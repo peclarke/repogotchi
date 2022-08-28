@@ -21,4 +21,5 @@ export type RepogotchiType = {
     Mouth: number;
     Accessory: number;
     Ears: number;
+    Colour: string;
 }

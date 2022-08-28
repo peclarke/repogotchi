@@ -57,7 +57,8 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     Eyes: data.Eyes,
                     Mouth: data.Mouth,
                     Accessory: data.Accessory,
-                    Ears: data.Ears
+                    Ears: data.Ears,
+                    Colour: data.Colour,
                 }
             });
             console.log(repoData);

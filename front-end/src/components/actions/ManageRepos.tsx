@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import HelpDialog from '../../dialogs/HelpDialog';
+import generate, { SpriteGeneration } from '../../generation/generate';
 
 export type ManageReposProps = {
     updateRepos: () => void;
@@ -63,6 +64,7 @@ export default function ManageRepos(props: ManageReposProps) {
                 fetch(baseUrl + "/languages")
                     .then(res => res.json())
                     .then((jsonLang) => {
+                        const sprite: SpriteGeneration = generate();
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
                             PersonalName: "Bobbithy",
@@ -79,11 +81,12 @@ export default function ManageRepos(props: ManageReposProps) {
                             LastVisit: "",
                             Affection: 10,
                             MaxAffection: 10,
-                            Body: 0,
-                            Eyes: 0,
-                            Mouth: 0,
-                            Accessory: 0,
-                            Ears: 0,
+                            Body: sprite.body,
+                            Eyes: sprite.eyes,
+                            Mouth: sprite.mouth,
+                            Accessory: sprite.accessory,
+                            Ears: sprite.ears,
+                            Colour: sprite.colour,
                         }
 
                         const userStuff = async () => {
