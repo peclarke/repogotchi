@@ -56,7 +56,7 @@ export default function Details(props: DetailsProps) {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 const mapped: Commit[] = [];
                 if (data.length > 3) {
                     for (var i = 0; i < 4; i++) {
