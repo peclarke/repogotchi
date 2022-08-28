@@ -13,6 +13,7 @@ import { RepogotchiType } from '../state/repo';
 import repogotchi from '../assets/example_asset.png';
 import repogotchi2 from '../assets/example_asset_2.png';
 import repogotchi3 from '../assets/example_asset_3.png';
+import repogotchi4 from '../assets/example_asset_4.png';
 
 import FadeIn from 'react-fade-in';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
@@ -38,7 +39,7 @@ import 'react-slideshow-image/dist/styles.css'
 //     },
 //   ];
 
-const repos = [repogotchi, repogotchi2, repogotchi3];
+const repos = [repogotchi, repogotchi2, repogotchi3, repogotchi4];
 
 const theme = createTheme();
 
