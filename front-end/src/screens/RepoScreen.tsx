@@ -40,7 +40,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         Mouth: 0,
         Accessory: 0,
         Ears: 0,
-        Colour: "red",
+        Colour: "white",
     });
     const { height } = useWindowDimensions();
 

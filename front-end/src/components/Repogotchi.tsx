@@ -42,6 +42,18 @@ export type RepogotchiDisplayProps = {
 }
 
 export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
+    const healthPercent = Math.floor(props.repo.CurrentHealth / props.repo.MaxHealth * 100);
+    const mouthTransform = () => {
+        console.log(props.repo.CurrentHealth);
+        console.log(props.repo.MaxHealth);
+        console.log(healthPercent);
+        if (healthPercent < 50) {
+            return "rotateX(180deg)"
+        } else {
+            return "none"
+        }
+    }
+
     const mouthWidth = props.imgWidth / 4;
     const mouthLeft = props.imgWidth / 2.65;
     const mouthTop = props.imgWidth / 2.65;
@@ -59,7 +71,7 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
         <SpriteLayer height={2} src={earsSrc} width={props.imgWidth} />
         <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
         <SpriteLayer height={4} src={bodySrc} width={props.imgWidth} />
-        <img alt="mouth" src={mouthSrc} style={{ position: 'absolute', zIndex: 5, objectFit: 'scale-down', width: mouthWidth, transform: "rotateX(180deg)", left: mouthLeft, top: mouthTop }} />
+        <img alt="mouth" src={mouthSrc} style={{ position: 'absolute', zIndex: 5, objectFit: 'scale-down', width: mouthWidth, transform: mouthTransform(), left: mouthLeft, top: mouthTop }} />
         <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} />
         <SpriteLayer height={7} src={accessorySrc} width={props.imgWidth} />
     </Box>);
