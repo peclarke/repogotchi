@@ -54,6 +54,16 @@ export default function ManageRepos(props: ManageReposProps) {
         nav("/")
     }
 
+    const names = [
+        "Bobbithy",
+        "Prince James The Second",
+        "Rodney",
+        "Mittens",
+        "Fluffy",
+        "Blähaj",
+        "ʕ•ᴥ•ʔ"
+    ]
+
     // useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
     // useEffect(() => add_repo("https://github.com/peclarke/fullstack-forum"), [])
 
@@ -77,7 +87,7 @@ export default function ManageRepos(props: ManageReposProps) {
                         const sprite: SpriteGeneration = generate();
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
-                            PersonalName: "Bobbithy",
+                            PersonalName: names[Math.floor(Math.random()*names.length)],
                             Age: "0",
                             Languages: Object.keys(jsonLang),
                             MaxHealth: 20,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
@@ -37,15 +37,21 @@ export type CommitProgressProps = {
 }
 
 export default function CommitProgress(props: CommitProgressProps) {
+    const [prog, setProg] = useState(0);
 
-    const progress = Math.floor((props.repo.LevelProgress / props.repo.LevelReq) * 100)
+    // const progress = Math.floor((props.repo.LevelProgress / props.repo.LevelReq) * 100)
+
+    useEffect(() => {
+        const progress = Math.floor((props.repo.LevelProgress / props.repo.LevelReq * 100));
+        setProg(progress);
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
-                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: 1</Typography>
+                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: {props.repo.Level}</Typography>
                 <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>{props.repo.LevelProgress} / {props.repo.LevelReq} XP</Typography>
-                <BorderLinearProgress variant="determinate" value={progress} />
+                <BorderLinearProgress variant="determinate" value={prog} />
             </Box>
         </ThemeProvider>
     )
