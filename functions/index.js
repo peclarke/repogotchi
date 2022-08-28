@@ -27,7 +27,7 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
             // get current field values
             var data = repogotchi.data();
             var level = data.Level;
-            var health = data.Health;
+            var health = data.CurrentHealth;
             var maxHealth = data.MaxHealth;
             var levelProgress = data.LevelProgress;
             var levelReq = data.LevelReq;
@@ -65,7 +65,7 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
             // Now that updates have been made, update in firebase
             await repRef.update({
                 Level: level,
-                Health: health,
+                CurrentHealth: health,
                 MaxHealth: maxHealth,
                 LevelProgress: levelProgress,
                 LevelReq: levelReq
@@ -108,11 +108,67 @@ async function decay() {
 }
 
 exports.decayOnDemand = functions.region("australia-southeast1").https.onRequest(async (_, res) => {
-    await decay();
+    const users = await admin.firestore().collection("users").get();
+    const now = await admin.firestore.Timestamp.now().toDate();
+
+    users.forEach(async (user) => {
+
+        let repogotchis = await user.ref.collection("repogotchis").get();
+        repogotchis.forEach(async (rep) => {
+            // Decay repogotchi health
+            let data = rep.data();
+            let health = data.CurrentHealth;
+            let affection = data.Affection;
+            let age = data.Age + 1;
+            let lastVisit = data.LastVisit.toDate();
+            if (health > 0) {
+                health -= 1;
+            }
+            if ((now.getTime() - lastVisit.getTime()) > 86400000) {
+                // If the owner hasnt visited in more than a day
+                if (affection > 0) {
+                    affection -= 1;
+                }
+            } else {
+                if (affection < data.MaxAffection) {
+                    affection += 2;
+                }
+            }
+            await rep.ref.update({ CurrentHealth: health, Affection: affection, Age: age });
+        });
+    });
     res.json({ result: "done" });
 });
 
 exports.decayDaily = functions.region("australia-southeast1").pubsub.schedule("0 1 * * *").onRun(async (_) => {
-    await decay();
+    const users = await admin.firestore().collection("users").get();
+    const now = await admin.firestore.Timestamp.now().toDate();
+
+    users.forEach(async (user) => {
+
+        let repogotchis = await user.ref.collection("repogotchis").get();
+        repogotchis.forEach(async (rep) => {
+            // Decay repogotchi health
+            let data = rep.data();
+            let health = data.CurrentHealth;
+            let affection = data.Affection;
+            let age = data.Age + 1;
+            let lastVisit = data.LastVisit.toDate();
+            if (health > 0) {
+                health -= 1;
+            }
+            if ((now.getTime() - lastVisit.getTime()) > 86400000) {
+                // If the owner hasnt visited in more than a day
+                if (affection > 0) {
+                    affection -= 1;
+                }
+            } else {
+                if (affection < data.MaxAffection) {
+                    affection += 2;
+                }
+            }
+            await rep.ref.update({ CurrentHealth: health, Affection: affection, Age: age });
+        });
+    });
     return null;
 });
