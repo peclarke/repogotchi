@@ -100,7 +100,8 @@ const staticInfo = [
         'img': <img src = {wiz4} alt="4th step"/>
     },
     {
-        'txt': '5. In "Payload URL", copy and paste this URL: https://australia-southeast1-repogotchi.cloudfunctions.net/feedRepogotchi'
+        'txt': `5. In "Payload URL", copy and paste this URL:
+        https://australia-southeast1-repogotchi.cloudfunctions.net/feedRepogotchi`
     },
     {
         'txt': '6. For "Content Type", select "application/json"',

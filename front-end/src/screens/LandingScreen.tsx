@@ -85,10 +85,13 @@ export default function LandingScreen(props: LandingScreenProps) {
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
 
+    const [repoIndex, setRepoIndex] = useState(0);
+
     useEffect(() => {
         if (localStorage.getItem("user")) {
             nav('/home')
         }
+        setRepoIndex(Math.floor(Math.random() * repos.length));
     }, [])
 
     const nav = useNavigate();
@@ -162,7 +165,7 @@ export default function LandingScreen(props: LandingScreenProps) {
                             <FadeIn>
                                 {/* Media queries here! */}
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={repos[Math.floor(Math.random() * repos.length)]} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
+                                    <img src={repos[repoIndex]} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
                                 </Box>
                                 <RepoListItem repo={exampleRepo} />
                             </FadeIn>
