@@ -111,12 +111,12 @@ export default function LandingScreen(props: LandingScreenProps) {
     }
 
     const exampleRepo: RepogotchiType = {
-        GithubName: "FirebaseAnalyticsProject",
-        PersonalName: "Desmond The Moon Bear",
-        Age: "",
+        GithubName: "My-Project-Repo",
+        PersonalName: "Mittens",
+        Age: "9",
         Languages: [""],
         MaxHealth: 100,
-        CurrentHealth: 90,
+        CurrentHealth: 70,
         CommitProgress: 100,
         LastCommit: "",
         Level: 0,
@@ -124,57 +124,57 @@ export default function LandingScreen(props: LandingScreenProps) {
         LevelProgress: 0,
         LevelReq: 0,
         LastVisit: "",
-        Affection: 10,
+        Affection: 15,
         MaxAffection: 20,
-        Body: 0,
+        Body: 1,
         Eyes: 0,
         Mouth: 0,
         Accessory: 0,
-        Ears: 0,
-        Colour: "white",
+        Ears: 2,
+        Colour: "pink",
     }
 
     return (
         <form onSubmit={login}>
-        <ThemeProvider theme={theme}>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <Box sx={{ ml: 5 }} >
-                            <Typography variant="h2" sx={{ ml: 13, mt: 3 }}>TamaGit</Typography>
-                            <Typography variant="h5">
-                                Never forget about your beloved projects again 
-                            </Typography>
-                            <Typography variant="h6">
-                                Get started...
-                            </Typography>
-                            <Box sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 125, mt: 3}}>
-                                <TextField id="username-input" label="Github Username" variant="outlined" sx = {{ width: '80%' }} onChange={(e) => updateUser(e)} />
-                                <TextField id="password-input" label="New Password" variant="outlined" sx = {{ width: '80%' }} type="password"/>
-                            </Box>
-                            <Box sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3}} onChange={(e) => updateUser(e)}>
-                                <Button variant="contained" sx={styles.button} size="large" type='submit'>Login</Button>
-                            </Box>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <Box sx={{
-                            justifyContent: 'center', display: 'flex',
-                            flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
-                            paddingLeft: 4, paddingRight: 4
-                        }}>
-                            <FadeIn>
-                                {/* Media queries here! */}
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={repos[repoIndex]} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
+            <ThemeProvider theme={theme}>
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <Box sx={{ ml: 5 }} >
+                                <Typography variant="h2" sx={{ ml: 13, mt: 3 }}>TamaGit</Typography>
+                                <Typography variant="h5">
+                                    Never forget about your beloved projects again
+                                </Typography>
+                                <Typography variant="h6">
+                                    Get started...
+                                </Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 125, mt: 3 }}>
+                                    <TextField id="username-input" label="Github Username" variant="outlined" sx={{ width: '80%' }} onChange={(e) => updateUser(e)} />
+                                    <TextField id="password-input" label="New Password" variant="outlined" sx={{ width: '80%' }} type="password" />
                                 </Box>
-                                <RepoListItem repo={exampleRepo} />
-                            </FadeIn>
-                        </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3 }} onChange={(e) => updateUser(e)}>
+                                    <Button variant="contained" sx={styles.button} size="large" type='submit'>Login</Button>
+                                </Box>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Box sx={{
+                                justifyContent: 'center', display: 'flex',
+                                flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
+                                paddingLeft: 4, paddingRight: 4
+                            }}>
+                                <FadeIn>
+                                    {/* Media queries here! */}
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <img src={repos[repoIndex]} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
+                                    </Box>
+                                    <RepoListItem repo={exampleRepo} />
+                                </FadeIn>
+                            </Box>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Box>
-        </ThemeProvider>
+                </Box>
+            </ThemeProvider>
         </form>
     )
 }
