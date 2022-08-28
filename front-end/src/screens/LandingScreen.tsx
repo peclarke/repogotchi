@@ -135,6 +135,7 @@ export default function LandingScreen(props: LandingScreenProps) {
     }
 
     return (
+        <form onSubmit={login}>
         <ThemeProvider theme={theme}>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
@@ -152,7 +153,7 @@ export default function LandingScreen(props: LandingScreenProps) {
                                 <TextField id="password-input" label="New Password" variant="outlined" sx = {{ width: '80%' }} type="password"/>
                             </Box>
                             <Box sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3}} onChange={(e) => updateUser(e)}>
-                                <Button variant="contained" sx={styles.button} size="large" onClick={login}>Login</Button>
+                                <Button variant="contained" sx={styles.button} size="large" type='submit'>Login</Button>
                             </Box>
                         </Box>
                     </Grid>
@@ -174,6 +175,7 @@ export default function LandingScreen(props: LandingScreenProps) {
                 </Grid>
             </Box>
         </ThemeProvider>
+        </form>
     )
 }
 
