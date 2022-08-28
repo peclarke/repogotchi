@@ -8,6 +8,29 @@ export type RepoListProps = {
 }
 
 export default function RepoList(props: RepoListProps) {
+    // const exampleRepo: RepogotchiType = {
+    //     GithubName: "FirebaseAnalyticsProject",
+    //     PersonalName: "Desmond The Moon Bear",
+    //     Age: "",
+    //     Languages: [""],
+    //     MaxHealth: 100,
+    //     CurrentHealth: 90,
+    //     CommitProgress: 100,
+    //     LastCommit: "",
+    //     Level: 0,
+    //     Birthdate: "",
+    //     LevelProgress: 0,
+    //     LevelReq: 0,
+    //     LastVisit: "",
+    //     Affection: 10,
+    //     MaxAffection: 20,
+    //     Body: 0,
+    //     Eyes: 0,
+    //     Mouth: 0,
+    //     Accessory: 0,
+    //     Ears: 0,
+    //     Colour: "white",
+    // }
     return (
         <>
             {
@@ -19,17 +42,11 @@ export default function RepoList(props: RepoListProps) {
                     )
                 })
             }
-            {/* <Link to="/repo/1" style = {{ textDecoration: 'none'}}>
-                <RepoListItem />
-            </Link>
-
-            <Link to="/repo/2" style = {{ textDecoration: 'none'}}>
-                <RepoListItem />
-            </Link>
-
-            <Link to="/repo/3" style = {{ textDecoration: 'none'}}>
-                <RepoListItem />
-            </Link> */}
+            {/* <RepoListItem repo={exampleRepo}/>
+            <RepoListItem repo={exampleRepo}/>
+            <RepoListItem repo={exampleRepo}/>
+            <RepoListItem repo={exampleRepo}/>
+            <RepoListItem repo={exampleRepo}/> */}
         </>
     )
 }

@@ -5,7 +5,7 @@ import ProgressBars from '../components/progress/ProgressBars';
 import NameAge from '../components/NameAge';
 import Details from '../components/Details';
 import Repogotchi from '../components/Repogotchi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, getDoc, doc, updateDoc } from 'firebase/firestore/lite';
@@ -46,7 +46,13 @@ export default function RepoScreen(props: RepoScreenProps) {
 
     const { id } = useParams();
 
+    const nav = useNavigate();
+
     useEffect(() => {
+        if (!localStorage.getItem("user")) {
+            nav("/")
+        }
+
         getInfo();
     }, [])
 
@@ -57,7 +63,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         // console.log("users/peclarke/repogotchis/" + id)
 
         const stuff = async () => {
-            const docRef = doc(db, "users/peclarke/repogotchis/" + id);
+            const docRef = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis/" + id);
             const snapDoc = await getDoc(docRef);
             const data = snapDoc.data();
             if (data) {
@@ -99,7 +105,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         });
 
         // update firebase
-        const docRef = doc(db, "users/peclarke/repogotchis/" + id);
+        const docRef = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis/" + id);
         await updateDoc(docRef, {
             PersonalName: text
         })

@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ManageRepos from '../components/actions/ManageRepos';
 import RepoList from '../components/RepoList/RepoList';
 import { firebaseConfig } from '../config/firebase';
@@ -20,12 +21,20 @@ export default function RepoListScreen(props: RepoListScreenProps) {
     const [repos, setRepos] = useState<RepogotchiType[]>([]);
     const [allow, setAllow] = useState(true);
 
+    const nav = useNavigate();
+
     useEffect(() => {
+        if (!localStorage.getItem("user")) {
+            nav("/")
+        }
+
+        console.log(localStorage.getItem("user"))
+
         getUserRepos();
     }, [])
 
     useEffect(() => {
-        setAllow(repos.length < 4);
+        setAllow(repos.length < 5);
     }, [repos])
 
     const getUserRepos = async () => {
@@ -33,7 +42,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
         const db: Firestore = getFirestore(app);
 
         const userRepos = async () => {
-            const repoCol = collection(db, "users/peclarke/repogotchis");
+            const repoCol = collection(db, "users/" + localStorage.getItem("user") + "/repogotchis");
             const repoDocs = await getDocs(repoCol);
             const repoData: RepogotchiType[] = repoDocs.docs.map((doc) => {
                 const data = doc.data();

@@ -13,6 +13,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import HelpDialog from '../../dialogs/HelpDialog';
 import generate, { SpriteGeneration } from '../../generation/generate';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useNavigate } from 'react-router-dom';
 
 export type ManageReposProps = {
     updateRepos: () => void;
@@ -25,6 +27,8 @@ export default function ManageRepos(props: ManageReposProps) {
     const [help, setHelp] = useState(false);
 
     const [dialogType, setDialogType] = useState<"add" | "remove">("add");
+
+    const nav = useNavigate();
 
     const openAddRepo = () => {
         setDialogType("add");
@@ -42,6 +46,11 @@ export default function ManageRepos(props: ManageReposProps) {
         } else {
             remove_repo(res);
         }
+    }
+
+    const signout = () => {
+        localStorage.clear();
+        nav("/")
     }
 
     // useEffect(() => get_repo_info("https://github.com/peclarke/fullstack-forum"), [])
@@ -91,7 +100,7 @@ export default function ManageRepos(props: ManageReposProps) {
 
                         const userStuff = async () => {
                             // const repoCol = collection(db, "users/peclarke/repogotchis");
-                            const repoDoc = doc(db, "users/peclarke/repogotchis", json['name'])
+                            const repoDoc = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis", json['name'])
                             // const docRef = await addDoc(repoCol, repo);
                             const docRef = await setDoc(repoDoc, repo)
                             props.updateRepos();
@@ -111,7 +120,7 @@ export default function ManageRepos(props: ManageReposProps) {
         const db: Firestore = getFirestore(app);
 
         const stuff = async () => {
-            const docRef = doc(db, "users/peclarke/repogotchis/" + githubName);
+            const docRef = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis/" + githubName);
             await deleteDoc(docRef);
             props.updateRepos();
         }
@@ -133,7 +142,7 @@ export default function ManageRepos(props: ManageReposProps) {
             {/* </Paper> */}
 
             {/* <Paper sx = {{ pt: 0, pb: 2}}> */}
-            <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" width="65%" sx={{ mt: 20, ml: 7 }}>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="space-between" width="65%" sx={{ mt: 20, ml: 7 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Button variant="outlined" onClick={() => setWizard(true)}>Repo Wizard</Button>
@@ -142,6 +151,7 @@ export default function ManageRepos(props: ManageReposProps) {
                         <Button variant="outlined" onClick={() => setHelp(true)} sx={{ width: '100%' }}>Help</Button>
                     </Grid>
                 </Grid>
+                <Button variant="text" onClick={signout} sx = {{ mt: 5}} startIcon={<ExitToAppIcon />}>Sign Out</Button>
             </Box>
             {/* </Paper> */}
         </>
