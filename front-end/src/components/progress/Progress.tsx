@@ -37,14 +37,14 @@ export type ProgressProps = {
 }
 
 export default function Progress(props: ProgressProps) {
-    const [progress, setProgress] = useState(props.progress);
+    // const [progress, setProgress] = useState(props.progress);
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx = {{ m: 2, flex: 1, flexDirection: 'column', lineHeight: 3 }}>
                 <Typography variant="h5" component="h2">{props.title}</Typography>
                 <Typography variant="h6">{props.bio}</Typography>
-                <BorderLinearProgress variant="determinate" value={progress} />
+                <BorderLinearProgress variant="determinate" value={props.progress} />
             </Box>
         </ThemeProvider>
     )
