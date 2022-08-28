@@ -75,38 +75,6 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
     }
 });
 
-async function decay() {
-    const users = await admin.firestore().collection("users").get();
-    const now = await admin.firestore.Timestamp.now().toDate();
-
-    users.forEach(async (user) => {
-
-        let repogotchis = await user.ref.collection("repogotchis").get();
-        repogotchis.forEach(async (rep) => {
-            // Decay repogotchi health
-            let data = rep.data();
-            let health = data.CurrentHealth;
-            let affection = data.Affection;
-            let age = data.Age + 1;
-            let lastVisit = data.LastVisit.toDate();
-            if (health > 0) {
-                health -= 1;
-            }
-            if ((now.getTime() - lastVisit.getTime()) > 86400000) {
-                // If the owner hasnt visited in more than a day
-                if (affection > 0) {
-                    affection -= 1;
-                }
-            } else {
-                if (affection < data.MaxAffection) {
-                    affection += 2;
-                }
-            }
-            await rep.ref.update({ CurrentHealth: health, Affection: affection, Age: age });
-        });
-    });
-}
-
 exports.decayOnDemand = functions.region("australia-southeast1").https.onRequest(async (_, res) => {
     const users = await admin.firestore().collection("users").get();
     const now = await admin.firestore.Timestamp.now().toDate();
