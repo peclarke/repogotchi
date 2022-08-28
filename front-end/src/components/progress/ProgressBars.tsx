@@ -16,7 +16,7 @@ export default function ProgressBars(props: ProgressBarsProps) {
     // console.log(healthPercent);
 
     useEffect(() => update(), [props.repo])
-    console.log(health, affection)
+    // console.log(health, affection)
 
     const update = () => {
         const healthPercent = Math.floor(props.repo.CurrentHealth / props.repo.MaxHealth * 100);

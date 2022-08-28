@@ -11,24 +11,34 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { RepogotchiType } from '../state/repo';
 
 import repogotchi from '../assets/example_asset.png';
+import repogotchi2 from '../assets/example_asset_2.png';
+import repogotchi3 from '../assets/example_asset_3.png';
+
 import FadeIn from 'react-fade-in';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-// const { palette } = createTheme();
-// const { augmentColor } = palette;
-// const createColor = (mainColor: string) => augmentColor({ color: { main: mainColor } });
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
 
-// const theme = createTheme({
-//     palette: {
-//         jazz: createColor("#e66465"),
-//         funk: createColor("#9198e5")
-//     }
-// });
+// const slideImages = [
+//     {
+//       url: '../assets/example_asset.png',
+//       caption: 'Slide 1'
+//     },
+//     {
+//       url: '../assets/example_asset_2.png',
+//       caption: 'Slide 2'
+//     },
+//     {
+//       url: '../assets/example_asset_3.png',
+//       caption: 'Slide 3'
+//     },
+//   ];
 
-
+const repos = [repogotchi, repogotchi2, repogotchi3];
 
 const theme = createTheme();
 
@@ -152,7 +162,7 @@ export default function LandingScreen(props: LandingScreenProps) {
                             <FadeIn>
                                 {/* Media queries here! */}
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={repogotchi} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
+                                    <img src={repos[Math.floor(Math.random() * repos.length)]} alt="An example of a repogotchi" style={{ width: width * 0.4 }} />
                                 </Box>
                                 <RepoListItem repo={exampleRepo} />
                             </FadeIn>
