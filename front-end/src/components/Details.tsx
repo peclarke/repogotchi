@@ -52,7 +52,7 @@ export default function Details(props: DetailsProps) {
     }, []);
 
     const get_commits = () => {
-        const url = "https://api.github.com/repos/peclarke/" + id + "/commits";
+        const url = "https://api.github.com/repos/" + localStorage.getItem("user") + "/" + id + "/commits";
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -85,7 +85,7 @@ export default function Details(props: DetailsProps) {
     }
 
     const get_langs = () => {
-        const baseUrl = "https://api.github.com/repos/" + 'peclarke' + "/" + id
+        const baseUrl = "https://api.github.com/repos/" + localStorage.getItem("user") + "/" + id
         fetch(baseUrl + "/languages")
             .then(res => res.json())
             .then((jsonLang) => {

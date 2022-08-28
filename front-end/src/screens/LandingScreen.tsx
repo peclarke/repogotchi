@@ -15,6 +15,7 @@ import FadeIn from 'react-fade-in';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // const { palette } = createTheme();
 // const { augmentColor } = palette;
@@ -74,12 +75,26 @@ export default function LandingScreen(props: LandingScreenProps) {
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
 
+    useEffect(() => {
+        if (localStorage.getItem("user")) {
+            nav('/home')
+        }
+    }, [])
+
+    const nav = useNavigate();
+
     const updateUser = (e: any) => {
-        setUser(e);
+        setUser(e.target.value);
     }
 
     const updatePass = (e: any) => {
-        setPass(e);
+        setPass(e.target.value);
+    }
+
+    const login = () => {
+        // put user in local storage
+        localStorage.setItem('user', user);
+        nav('/home');
     }
 
     const exampleRepo: RepogotchiType = {
@@ -120,11 +135,11 @@ export default function LandingScreen(props: LandingScreenProps) {
                                 Get started...
                             </Typography>
                             <Box sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 125, mt: 3}}>
-                                <TextField id="username-input" label="Username" variant="outlined" sx = {{ width: '80%' }} onChange={(e) => updateUser(e)} />
-                                <TextField id="password-input" label="Password" variant="outlined" sx = {{ width: '80%' }}/>
+                                <TextField id="username-input" label="Github Username" variant="outlined" sx = {{ width: '80%' }} onChange={(e) => updateUser(e)} />
+                                <TextField id="password-input" label="New Password" variant="outlined" sx = {{ width: '80%' }} type="password"/>
                             </Box>
                             <Box sx = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3}} onChange={(e) => updateUser(e)}>
-                                <Button variant="contained" sx={styles.button} size="large">Login</Button>
+                                <Button variant="contained" sx={styles.button} size="large" onClick={login}>Login</Button>
                             </Box>
                         </Box>
                     </Grid>
