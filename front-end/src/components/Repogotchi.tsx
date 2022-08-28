@@ -16,10 +16,11 @@ export type SpriteLayerProps = {
     height: number;
     src: string;
     width: number;
+    opacity: number;
 }
 
 export function SpriteLayer(props: SpriteLayerProps) {
-    return (<img src={props.src} style={{ position: 'absolute', zIndex: props.height, objectFit: 'scale-down', width: props.width }} />);
+    return (<img src={props.src} style={{ position: 'absolute', zIndex: props.height, objectFit: 'scale-down', width: props.width, opacity: props.opacity }} />);
 }
 
 export type ColourLayerProps = {
@@ -65,15 +66,25 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const mouthSrc = require('../sprite/mouths/mouth' + props.repo.Mouth + '.png');
     const eyesSrc = require('../sprite/eye' + props.repo.Eyes + '.png');
     const accessorySrc = require('../sprite/accessory' + props.repo.Accessory + '.png');
+    const crownSrc = require('../sprite/crown.png');
+
+    const crownOpacity = () => {
+        if (props.repo.Level >= 3) {
+            return 100;
+        } else {
+            return 0;
+        }
+    };
 
     return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: "100%", height: props.containerHeight }}>
         <ColourLayer height={1} src={earsMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
-        <SpriteLayer height={2} src={earsSrc} width={props.imgWidth} />
+        <SpriteLayer height={2} src={earsSrc} width={props.imgWidth} opacity={100} />
         <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
-        <SpriteLayer height={4} src={bodySrc} width={props.imgWidth} />
+        <SpriteLayer height={4} src={bodySrc} width={props.imgWidth} opacity={100} />
         <img alt="mouth" src={mouthSrc} style={{ position: 'absolute', zIndex: 5, objectFit: 'scale-down', width: mouthWidth, transform: mouthTransform(), left: mouthLeft, top: mouthTop }} />
-        <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} />
-        <SpriteLayer height={7} src={accessorySrc} width={props.imgWidth} />
+        <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} opacity={100} />
+        <SpriteLayer height={7} src={accessorySrc} width={props.imgWidth} opacity={100} />
+        <SpriteLayer height={8} src={crownSrc} width={props.imgWidth} opacity={crownOpacity()} />
     </Box>);
 }
 
