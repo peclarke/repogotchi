@@ -79,8 +79,8 @@ export default function ManageRepos(props: ManageReposProps) {
                             PersonalName: "Bobbithy",
                             Age: "0",
                             Languages: Object.keys(jsonLang),
-                            MaxHealth: 100,
-                            CurrentHealth: 100,
+                            MaxHealth: 20,
+                            CurrentHealth: 20,
                             CommitProgress: 100,
                             LastCommit: "",
                             Level: 1,
@@ -151,7 +151,7 @@ export default function ManageRepos(props: ManageReposProps) {
                         <Button variant="outlined" onClick={() => setHelp(true)} sx={{ width: '100%' }}>Help</Button>
                     </Grid>
                 </Grid>
-                <Button variant="text" onClick={signout} sx = {{ mt: 5}} startIcon={<ExitToAppIcon />}>Sign Out</Button>
+                <Button variant="text" onClick={signout} sx={{ mt: 5 }} startIcon={<ExitToAppIcon />}>Sign Out</Button>
             </Box>
             {/* </Paper> */}
         </>

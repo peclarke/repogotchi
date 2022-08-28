@@ -45,15 +45,37 @@ export type RepogotchiDisplayProps = {
 export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const healthPercent = Math.floor(props.repo.CurrentHealth / props.repo.MaxHealth * 100);
     const mouthTransform = () => {
-        console.log(props.repo.CurrentHealth);
-        console.log(props.repo.MaxHealth);
-        console.log(healthPercent);
         if (healthPercent < 50) {
             return "rotateX(180deg)"
         } else {
             return "none"
         }
     }
+
+    const crownOpacity = () => {
+        if (props.repo.Level >= 3) {
+            return 100;
+        } else {
+            return 0;
+        }
+    };
+
+    const tearsOpacity = () => {
+        if (healthPercent < 30) {
+            return 100;
+        } else {
+            return 0;
+        }
+    }
+
+    const deadEyesOpacity = () => {
+        if (props.repo.CurrentHealth <= 0) {
+            return 100;
+        } else {
+            return 0;
+        }
+    }
+
 
     const mouthWidth = props.imgWidth / 4;
     const mouthLeft = props.imgWidth / 2.65;
@@ -67,14 +89,8 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const eyesSrc = require('../sprite/eye' + props.repo.Eyes + '.png');
     const accessorySrc = require('../sprite/accessory' + props.repo.Accessory + '.png');
     const crownSrc = require('../sprite/crown.png');
-
-    const crownOpacity = () => {
-        if (props.repo.Level >= 3) {
-            return 100;
-        } else {
-            return 0;
-        }
-    };
+    const tearsSrc = require('../sprite/tears.png');
+    const deadEyesSrc = require('../sprite/deadeyes.png');
 
     return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: "100%", height: props.containerHeight }}>
         <ColourLayer height={1} src={earsMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
@@ -82,9 +98,11 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
         <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
         <SpriteLayer height={4} src={bodySrc} width={props.imgWidth} opacity={100} />
         <img alt="mouth" src={mouthSrc} style={{ position: 'absolute', zIndex: 5, objectFit: 'scale-down', width: mouthWidth, transform: mouthTransform(), left: mouthLeft, top: mouthTop }} />
-        <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} opacity={100} />
-        <SpriteLayer height={7} src={accessorySrc} width={props.imgWidth} opacity={100} />
-        <SpriteLayer height={8} src={crownSrc} width={props.imgWidth} opacity={crownOpacity()} />
+        <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} opacity={100 - deadEyesOpacity()} />
+        <SpriteLayer height={7} src={deadEyesSrc} width={props.imgWidth} opacity={deadEyesOpacity()} />
+        <SpriteLayer height={8} src={accessorySrc} width={props.imgWidth} opacity={100} />
+        <SpriteLayer height={9} src={tearsSrc} width={props.imgWidth} opacity={tearsOpacity()} />
+        <SpriteLayer height={10} src={crownSrc} width={props.imgWidth} opacity={crownOpacity()} />
     </Box>);
 }
 
