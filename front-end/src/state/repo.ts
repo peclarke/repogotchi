@@ -12,7 +12,7 @@ export type RepogotchiType = {
     Birthdate: string;
     LevelProgress: number;
     LevelReq: number;
-    LastVisit: string;
+    LastVisit: Object;
     Affection: number;
     MaxAffection: number;
     // Fields for sprite generation

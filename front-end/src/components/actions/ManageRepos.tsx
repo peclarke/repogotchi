@@ -6,7 +6,8 @@ import BigButton from './BigButton';
 
 import { firebaseConfig } from '../../config/firebase';
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs, deleteDoc } from 'firebase/firestore/lite';
+import firebase from "firebase/compat/app";
+import { getFirestore, collection, setDoc, getDoc, addDoc, Firestore, doc, getDocs, deleteDoc, serverTimestamp } from 'firebase/firestore/lite';
 import WizardDialog from '../../dialogs/WizardDialog';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -87,7 +88,7 @@ export default function ManageRepos(props: ManageReposProps) {
                             Birthdate: new Date(json['created_at']).toDateString(),
                             LevelProgress: 0,
                             LevelReq: 20,
-                            LastVisit: "",
+                            LastVisit: serverTimestamp(),
                             Affection: 10,
                             MaxAffection: 10,
                             Body: sprite.body,
