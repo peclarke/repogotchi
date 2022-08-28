@@ -25,6 +25,7 @@ export function SpriteLayer(props: SpriteLayerProps) {
 
 export type ColourLayerProps = {
     height: number;
+    imgHeight: number;
     src: string;
     width: number;
     colour: string;
@@ -32,7 +33,7 @@ export type ColourLayerProps = {
 
 export function ColourLayer(props: ColourLayerProps) {
     return (
-        <div style={{ width: props.width, height: 500, position: 'absolute', display: 'inline-block', zIndex: props.height, objectFit: 'scale-down', background: props.colour, WebkitMaskImage: "url(" + props.src + ")", maskImage: "url(" + props.src + ")", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskSize: "contain", maskSize: "contain" }} />
+        <div style={{ width: props.width, height: props.imgHeight, position: 'absolute', display: 'inline-block', zIndex: props.height, objectFit: 'scale-down', background: props.colour, WebkitMaskImage: "url(" + props.src + ")", maskImage: "url(" + props.src + ")", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskSize: "contain", maskSize: "contain" }} />
     );
 }
 
@@ -92,10 +93,10 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const tearsSrc = require('../sprite/tears.png');
     const deadEyesSrc = require('../sprite/deadeyes.png');
 
-    return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: "100%", height: props.containerHeight }}>
-        <ColourLayer height={1} src={earsMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
+    return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: props.imgWidth, height: props.containerHeight }}>
+        <ColourLayer height={1} src={earsMaskSrc} width={props.imgWidth} colour={props.repo.Colour} imgHeight={props.containerHeight} />
         <SpriteLayer height={2} src={earsSrc} width={props.imgWidth} opacity={100} />
-        <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} />
+        <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} imgHeight={props.containerHeight} />
         <SpriteLayer height={4} src={bodySrc} width={props.imgWidth} opacity={100} />
         <img alt="mouth" src={mouthSrc} style={{ position: 'absolute', zIndex: 5, objectFit: 'scale-down', width: mouthWidth, transform: mouthTransform(), left: mouthLeft, top: mouthTop }} />
         <SpriteLayer height={6} src={eyesSrc} width={props.imgWidth} opacity={100 - deadEyesOpacity()} />
