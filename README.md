@@ -19,6 +19,7 @@ This is your Repogotchi, your new best friend! He's going to help you stay motiv
 - Come visit yor Repogotchi on our site to increase it's affection. He's your best friend after all, come say hello!
 - At different levels, you can get different accessories. (Such as the crown at level 3!)
 - If your Repogotchi's health or affection starts to drop or reaches 0, his expression will change from a happy face, to a sad face, and eventually a dead one. None-the-less, you can still make a commit and revive your Repogotchi!
+- All Repogotchi avatars are procedurally generated using hand-drawn custom assets.
 <img width="800" alt="generic 1" src="https://user-images.githubusercontent.com/30831649/187104303-e489b1d1-5537-4d80-97e2-5ea6163349c8.png">
 <img width="800" alt="crown accessory" src="https://user-images.githubusercontent.com/30831649/187104417-f0ac54cc-ad21-45cf-9f22-0e9b3d01b16c.png">
 <img width="800" alt="dead repo" src="https://user-images.githubusercontent.com/30831649/187104673-f46c2363-7ecd-4b03-b82e-0806d246afb4.png">
