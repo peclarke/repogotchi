@@ -14,7 +14,7 @@ The Dashboard is where you see all your Repogotchis. You can view their health, 
 <img width="800" alt="Screen Shot 2022-08-29 at 11 13 46 am" src="https://user-images.githubusercontent.com/30831649/187104227-e73a1e93-9cc1-4455-85c7-dcdb2592b1b0.png">
 
 ## Repogotchis
-This is your Repogotchi, your new best friend! He's going to help stay motivated and keep committing to your repository. 
+This is your Repogotchi, your new best friend! He's going to help you stay motivated and keep committing to your repository. 
 - Each time you commit, your health Repogotchi's health will increase. If health already full, your commits will increase your level experience
 - Come visit yor Repogotchi on our site to increase it's affection. He's your best friend after all, come say hello!
 - At different levels, you can get different accessories. (Such as the crown at level 3!)
