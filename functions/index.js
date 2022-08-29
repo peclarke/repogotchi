@@ -9,16 +9,17 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
     const repository = req.body.repository.name;
     const commitList = req.body.commits;
 
-    // Find user document 
-    const userRef = admin.firestore().collection("users").doc(username);
-    const user = await userRef.get();
-    if (!user.exists) {
+    const userCollection = admin.firestore().collection("users");
+    const userQuery = await userCollection.where("github", "==", username).get();
+    if (userQuery.size < 1) {
         // if the pusher isnt the same as the person making commits, stuff gets weird. 
         // limitation of non-relational database 
         res.json({ result: "pusher not registered" })
-    } else {
+    }
+    // Should only be one user with that github name, fingers crossed ..?
+    userQuery.forEach(async (user) => {
         // find repogotchi document
-        const repRef = userRef.collection("repogotchis").doc(repository);
+        const repRef = user.ref.collection("repogotchis").doc(repository);
         const repogotchi = await repRef.get();
 
         if (!repogotchi.exists) {
@@ -72,7 +73,7 @@ exports.feedRepogotchi = functions.region("australia-southeast1").https.onReques
             });
             res.json({ result: "success" });
         }
-    }
+    });
 });
 
 exports.decayOnDemand = functions.region("australia-southeast1").https.onRequest(async (_, res) => {
