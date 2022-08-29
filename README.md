@@ -2,7 +2,7 @@
 #### Winner of Best Overall Project at the 2022 UQCS Hackathon. 
 
 Combining Tamagotchis and GitHub to gamify your commits to your repository. 
-A project by Paul Clarke and Miriam Elliott-Haynes.
+A project by Paul Clarke and Miriam Elliott Haynes.
 
 ## Landing Page
 First, you'll need to supply your GitHub Username so we know who you are. Then, get started
@@ -23,3 +23,17 @@ This is your Repogotchi, your new best friend! He's going to help you stay motiv
 <img width="800" alt="generic 1" src="https://user-images.githubusercontent.com/30831649/187104303-e489b1d1-5537-4d80-97e2-5ea6163349c8.png">
 <img width="800" alt="crown accessory" src="https://user-images.githubusercontent.com/30831649/187104417-f0ac54cc-ad21-45cf-9f22-0e9b3d01b16c.png">
 <img width="800" alt="dead repo" src="https://user-images.githubusercontent.com/30831649/187104673-f46c2363-7ecd-4b03-b82e-0806d246afb4.png">
+
+## Limitations
+- Currently only public GitHub repositories are supported - we would like to change this in future by working with GitHub OAuth
+- Repogotchi level-up accessories are currently limited to just the crown
+
+## Known issues
+- When adding a repository thats under a different user/organisation's name, the system is unable to query GitHub for its commits and languages
+
+## Possible future plans
+- Adding GitHub OAuth integration to allow easier adding of repositories, automatic webhook creation, and support for private repos
+- Graveyard for dead repogotchis, and a retirement option to pause updates for mature/finished repos
+- Notifications to provide feedback when a repogotchi is fed, or remind users to feed them by committing
+- Additional level-up cosmetics
+- Affection-based cosmetics

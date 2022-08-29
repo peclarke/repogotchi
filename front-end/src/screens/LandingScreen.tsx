@@ -227,7 +227,7 @@ export default function LandingScreen(props: LandingScreenProps) {
     const exampleRepo: RepogotchiType = {
         GithubName: "My-Project-Repo",
         PersonalName: "Mittens",
-        Age: "9",
+        Age: 9,
         Languages: [""],
         MaxHealth: 100,
         CurrentHealth: 70,

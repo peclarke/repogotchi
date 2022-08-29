@@ -1,7 +1,7 @@
 export type RepogotchiType = {
     GithubName: string;
     PersonalName: string;
-    Age: string;
+    Age: number;
     Languages: string[];
     MaxHealth: number;
     CurrentHealth: number;
