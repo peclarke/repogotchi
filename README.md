@@ -1,7 +1,7 @@
 # Repogotchi / TamaGit
+#### Winner of Best Overall Project at the 2022 UQCS Hackathon. 
 
 Combining Tamagotchis and GitHub to gamify your commits to your repository. 
-Winner of Best Overall Project at the 2022 UQCS Hackathon. 
 A project by Paul Clarke and Miriam Elliott-Haynes.
 
 ## Landing Page
