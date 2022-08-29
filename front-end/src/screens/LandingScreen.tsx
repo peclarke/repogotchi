@@ -21,23 +21,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { Slide } from 'react-slideshow-image';
+// import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
-// const slideImages = [
-//     {
-//       url: '../assets/example_asset.png',
-//       caption: 'Slide 1'
-//     },
-//     {
-//       url: '../assets/example_asset_2.png',
-//       caption: 'Slide 2'
-//     },
-//     {
-//       url: '../assets/example_asset_3.png',
-//       caption: 'Slide 3'
-//     },
-//   ];
+import { initializeApp } from 'firebase/app';
+import { Firestore, getFirestore, getDoc, doc, updateDoc, collection, getDocs, setDoc } from 'firebase/firestore/lite';
+import { firebaseConfig } from '../config/firebase';
+// import { getAuth } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 const repos = [repogotchi, repogotchi2, repogotchi3, repogotchi4];
 
@@ -83,10 +74,23 @@ export type LandingScreenProps = {
 export default function LandingScreen(props: LandingScreenProps) {
     const { width, height } = useWindowDimensions();
 
-    const [user, setUser] = useState("");
+    const [username, setUser] = useState("");
+    const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const [repoIndex, setRepoIndex] = useState(0);
+
+    const app = initializeApp(firebaseConfig);
+    const db: Firestore = getFirestore(app);
+
+    const auth = getAuth();
+
+    // useEffect(() => {
+
+    // }, [auth.currentUser])
 
     useEffect(() => {
         if (localStorage.getItem("user")) {
@@ -97,6 +101,10 @@ export default function LandingScreen(props: LandingScreenProps) {
 
     const nav = useNavigate();
 
+    const updateEmail = (e: any) => {
+        setEmail(e.target.value);
+    }
+
     const updateUser = (e: any) => {
         setUser(e.target.value);
     }
@@ -105,10 +113,115 @@ export default function LandingScreen(props: LandingScreenProps) {
         setPass(e.target.value);
     }
 
-    const login = () => {
-        // put user in local storage
-        localStorage.setItem('user', user);
-        nav('/home');
+    const login =  () => {
+        setLoading(true);
+
+        const work = async () => {
+
+            const docRef = doc(db, "users/" + email);
+            const snapDoc = await getDoc(docRef);
+
+
+            const auth = getAuth();
+            if (snapDoc.exists()) {
+                // auth the user
+                signInWithEmailAndPassword(auth, email, pass)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        setError(errorMessage);
+                    });
+                
+                // onAuthStateChanged(auth, (user) => {
+                //     const data = snapDoc.data();
+
+                //     if ((data.github === username) && user) {
+                //         localStorage.setItem('user', username);
+                //         localStorage.setItem('email', email);
+                //         // setLoading(false);
+                //         nav('/home')
+                //     } else {
+                //         nav("/")
+                //         setLoading(false);
+                //         signOut(auth).then(() => {
+                //             localStorage.clear();
+                //             // setLoading(false);
+                //             // setError("A user already exists with this email. But, wrong github username")
+                //             // nav("/")
+                //             // Sign-out successful.
+                //           }).catch((error) => {
+                //             // An error happened.
+                //           });
+                //     }
+
+                    // if (data.github !== username) {
+                    //     localStorage.clear()
+                    //     setError("");
+                    //     setLoading(false);
+                    // }
+                    // setLoading(false);
+            } else {
+                // create the user
+                createUserWithEmailAndPassword(auth, email, pass)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const userDoc = doc(db, "users/" + email)
+
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        setError(errorMessage);
+                    });
+
+                const userDoc = doc(db, "users/" + email)
+                const set_the_things = async () => {
+                    await setDoc(userDoc, {'username': email, 'github': username});
+                }
+
+                // onAuthStateChanged(auth, (user) => {
+                //     if (user) {
+                //         set_the_things();
+                //         localStorage.setItem('user', username);
+                //         localStorage.setItem('email', email);
+                //         nav('/home')
+                //     } else {
+                //     //   setLoading(false);
+                //     }
+                //     // setLoading(false);
+                //   });
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                const data = snapDoc.data();
+
+                if (data && user) {
+                    if (data.github === username) {
+                        localStorage.setItem('user', username);
+                        localStorage.setItem('email', email);
+                        setLoading(false);
+                        nav('/home')
+                    } else {
+                        nav("/")
+                        setLoading(false);
+                        signOut(auth).then(() => {
+                            // localStorage.clear();
+                            // setLoading(false);
+                            // setError("A user already exists with this email. But, wrong github username")
+                            // nav("/")
+                            // Sign-out successful.
+                        }).catch((error) => {
+                            // An error happened.
+                        });
+                    }
+                }
+            })
+        }
+
+        work();
     }
 
     const exampleRepo: RepogotchiType = {
@@ -136,7 +249,7 @@ export default function LandingScreen(props: LandingScreenProps) {
     }
 
     return (
-        <form onSubmit={login}>
+        <form>
             <ThemeProvider theme={theme}>
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
@@ -149,12 +262,15 @@ export default function LandingScreen(props: LandingScreenProps) {
                                 <Typography variant="h6">
                                     Get started...
                                 </Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 125, mt: 3 }}>
-                                    <TextField id="username-input" label="Github Username" variant="outlined" sx={{ width: '80%' }} onChange={(e) => updateUser(e)} />
-                                    <TextField id="password-input" label="New Password" variant="outlined" sx={{ width: '80%' }} type="password" />
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 200, mt: 3 }}>
+                                    <TextField id="email-input" label="TamaGit Email" variant="outlined" sx={{ width: '80%' }} onChange={(e) => updateEmail(e)} />
+                                    <TextField id="password-input" label="TamaGit Password" variant="outlined" sx={{ width: '80%' }} type="password" onChange={(e) => updatePass(e)}/>
+                                    <TextField id="username-input" label="Github Username" variant="outlined" sx={{ width: '80%' }}
+                                     onChange={(e) => updateUser(e)} style = {{marginTop: 30, marginBottom: -18}} />
                                 </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3 }} onChange={(e) => updateUser(e)}>
-                                    <Button variant="contained" sx={styles.button} size="large" type='submit'>Login</Button>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3 }}>
+                                    <Button variant="contained" sx={styles.button} size="large" onClick={login}>{loading ? "loading" : "Login"}</Button>
+                                    { error ? error : ""}
                                 </Box>
                             </Box>
                         </Grid>

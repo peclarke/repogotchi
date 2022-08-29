@@ -34,9 +34,9 @@ export default function RepoList(props: RepoListProps) {
     return (
         <>
             {
-                props.repos.map((repo: RepogotchiType) => {
+                props.repos.map((repo: RepogotchiType, index) => {
                     return (
-                        <Link to={"/repo/" + repo.GithubName} style = {{ textDecoration: 'none'}}>
+                        <Link to={"/repo/" + repo.GithubName} style = {{ textDecoration: 'none'}} key={index}>
                             <RepoListItem repo={repo}/>
                         </Link>
                     )

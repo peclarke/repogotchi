@@ -63,7 +63,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         // console.log("users/peclarke/repogotchis/" + id)
 
         const stuff = async () => {
-            const docRef = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis/" + id);
+            const docRef = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis/" + id);
             const snapDoc = await getDoc(docRef);
             const data = snapDoc.data();
             if (data) {

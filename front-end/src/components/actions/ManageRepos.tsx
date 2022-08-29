@@ -16,6 +16,7 @@ import HelpDialog from '../../dialogs/HelpDialog';
 import generate, { SpriteGeneration } from '../../generation/generate';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 
 export type ManageReposProps = {
     updateRepos: () => void;
@@ -50,8 +51,14 @@ export default function ManageRepos(props: ManageReposProps) {
     }
 
     const signout = () => {
-        localStorage.clear();
-        nav("/")
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            localStorage.clear();
+            nav("/")
+            // Sign-out successful.
+          }).catch((error) => {
+            // An error happened.
+          });
     }
 
     const names = [
@@ -111,7 +118,7 @@ export default function ManageRepos(props: ManageReposProps) {
 
                         const userStuff = async () => {
                             // const repoCol = collection(db, "users/peclarke/repogotchis");
-                            const repoDoc = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis", json['name'])
+                            const repoDoc = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis", json['name'])
                             // const docRef = await addDoc(repoCol, repo);
                             const docRef = await setDoc(repoDoc, repo)
                             props.updateRepos();
@@ -131,7 +138,7 @@ export default function ManageRepos(props: ManageReposProps) {
         const db: Firestore = getFirestore(app);
 
         const stuff = async () => {
-            const docRef = doc(db, "users/" + localStorage.getItem("user") + "/repogotchis/" + githubName);
+            const docRef = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis/" + githubName);
             await deleteDoc(docRef);
             props.updateRepos();
         }

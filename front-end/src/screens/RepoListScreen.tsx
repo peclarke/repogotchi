@@ -28,7 +28,8 @@ export default function RepoListScreen(props: RepoListScreenProps) {
             nav("/")
         }
 
-        console.log(localStorage.getItem("user"))
+        // console.log(localStorage.getItem("user"))
+        // console.log(localStorage.getItem("email"))
 
         getUserRepos();
     }, [])
@@ -42,7 +43,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
         const db: Firestore = getFirestore(app);
 
         const userRepos = async () => {
-            const repoCol = collection(db, "users/" + localStorage.getItem("user") + "/repogotchis");
+            const repoCol = collection(db, "users/" + localStorage.getItem("email") + "/repogotchis");
             const repoDocs = await getDocs(repoCol);
             const repoData: RepogotchiType[] = repoDocs.docs.map((doc) => {
                 const data = doc.data();
@@ -70,7 +71,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     Colour: data.Colour,
                 }
             });
-            console.log(repoData);
+            // console.log(repoData);
             setRepos(repoData);
         }
 
