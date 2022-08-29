@@ -1,5 +1,10 @@
 front-end/package-lock.json
 front-end/node_modules
+front-end/firestore-debug.log
+functions/node_modules
+functions/package-lock.json
 node_modules
+package-lock.json
 firebase-debug.log
+firestore-debug.log
 ui-debug.log

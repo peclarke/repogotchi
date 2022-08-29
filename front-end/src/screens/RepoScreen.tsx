@@ -22,7 +22,7 @@ export default function RepoScreen(props: RepoScreenProps) {
     const [rep, setRep] = useState<RepogotchiType>({
         GithubName: "",
         PersonalName: "",
-        Age: "",
+        Age: 0,
         Languages: [""],
         MaxHealth: 100,
         CurrentHealth: 100,
@@ -121,7 +121,7 @@ export default function RepoScreen(props: RepoScreenProps) {
                         <Box sx={{ background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pt: 5 }}>
                             {/* <RepoButtons updateName={updatePersonalName}/> */}
                             <ProgressBars repo={rep} />
-                            <NameAge name={rep.PersonalName} age={rep.Age} />
+                            <NameAge name={rep.PersonalName} age={rep.Age.toString()} />
                             <RepoButtons updateName={updatePersonalName} />
                         </Box>
                     </Grid>

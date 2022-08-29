@@ -87,8 +87,8 @@ export default function ManageRepos(props: ManageReposProps) {
                         const sprite: SpriteGeneration = generate();
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
-                            PersonalName: names[Math.floor(Math.random()*names.length)],
-                            Age: "0",
+                            PersonalName: names[Math.floor(Math.random() * names.length)],
+                            Age: 0,
                             Languages: Object.keys(jsonLang),
                             MaxHealth: 20,
                             CurrentHealth: 20,
