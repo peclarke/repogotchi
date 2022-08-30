@@ -30,9 +30,11 @@ This is your Repogotchi, your new best friend! He's going to help you stay motiv
 
 ## Known issues
 - When adding a repository thats under a different user/organisation's name, the system is unable to query GitHub for its commits and languages
+- Commits need to be cached. Github rate limits the requests.
 
 ## Possible future plans
 - Adding GitHub OAuth integration to allow easier adding of repositories, automatic webhook creation, and support for private repos
+- Auth the requests going to Github to increase the rate limit on requests.
 - Graveyard for dead repogotchis, and a retirement option to pause updates for mature/finished repos
 - Notifications to provide feedback when a repogotchi is fed, or remind users to feed them by committing
 - Additional level-up cosmetics
