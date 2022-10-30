@@ -100,7 +100,8 @@ export const Login = () => {
                 signInWithEmailAndPassword(auth, email, pass)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    localStorage.setItem("user", email);
+                    // localStorage.setItem("user", email);
+                    localStorage.setItem("email", email)
                     nav("/home")
                 })
                 .catch((error) => {

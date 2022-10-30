@@ -24,7 +24,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
     const nav = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem("user")) {
+        if (!localStorage.getItem("email")) {
             nav("/")
         }
 

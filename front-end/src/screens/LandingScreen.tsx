@@ -91,7 +91,7 @@ export default function LandingScreen(props: LandingScreenProps) {
     // }, [auth.currentUser])
 
     useEffect(() => {
-        if (localStorage.getItem("user")) {
+        if (localStorage.getItem("email")) {
             nav('/home')
         } else {
             // signOut(auth).then(() => {
