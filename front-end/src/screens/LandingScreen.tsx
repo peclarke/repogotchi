@@ -120,15 +120,15 @@ export default function LandingScreen(props: LandingScreenProps) {
     //         setPersistence(auth, browserLocalPersistence).then(() => {
     //             if (snapDoc.exists()) {
     //                 // auth the user
-    //                 signInWithEmailAndPassword(auth, email, pass)
-    //                     .then((userCredential) => {
-    //                         const user = userCredential.user;
-    //                     })
-    //                     .catch((error) => {
-    //                         const errorCode = error.code;
-    //                         const errorMessage = error.message;
-    //                         setError(errorMessage);
-    //                     });
+                    // signInWithEmailAndPassword(auth, email, pass)
+                    //     .then((userCredential) => {
+                    //         const user = userCredential.user;
+                    //     })
+                    //     .catch((error) => {
+                    //         const errorCode = error.code;
+                    //         const errorMessage = error.message;
+                    //         setError(errorMessage);
+                    //     });
                     
     //                 // onAuthStateChanged(auth, (user) => {
     //                 //     const data = snapDoc.data();
