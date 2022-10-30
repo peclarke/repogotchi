@@ -12,6 +12,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import { doc, Firestore, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore/lite';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../config/firebase';
 
 const theme = createTheme();
 
@@ -28,6 +31,7 @@ theme.typography.h6 = {
 
 export type DetailsProps = {
     languages: string[];
+    owner: string;
 }
 
 export type Commit = {
@@ -45,14 +49,26 @@ export default function Details(props: DetailsProps) {
     const { id } = useParams();
     const {width, height} = useWindowDimensions();
 
+    const app = initializeApp(firebaseConfig);
+    const db: Firestore = getFirestore(app);
+
+
     useEffect(() => {
         setLoading(true);
         get_commits();
-        get_langs()
+        // get_langs()
     }, []);
 
     const get_commits = () => {
-        const url = "https://api.github.com/repos/" + localStorage.getItem("user") + "/" + id + "/commits";
+        /**
+         * Save the commits to the database so we can not query constantly
+         */
+        const save_commits = async (mappedCommits: Commit[]) => {
+            const docRef = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis/" + id + "/commits" + serverTimestamp());
+            await setDoc(docRef, mappedCommits);
+        }
+
+        const url = "https://api.github.com/repos/" + props.owner + "/" + id + "/commits";
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -77,21 +93,21 @@ export default function Details(props: DetailsProps) {
                         })
                     }
                 }
-                setCommits(mapped);
-
+                setCommits(mapped); 
+                // save_commits(mapped);
 
 
             }, (err) => console.log(err))
     }
 
     const get_langs = () => {
-        const baseUrl = "https://api.github.com/repos/" + localStorage.getItem("user") + "/" + id
-        fetch(baseUrl + "/languages")
-            .then(res => res.json())
-            .then((jsonLang) => {
-                setLangs(Object.keys(jsonLang));
-                setLoading(false);
-            }, (err) => console.log(err))
+        // const baseUrl = "https://api.github.com/repos/" + props.owner + "/" + id
+        // fetch(baseUrl + "/languages")
+        //     .then(res => res.json())
+        //     .then((jsonLang) => {
+        //         setLangs(Object.keys(jsonLang));
+        //         setLoading(false);
+        //     }, (err) => console.log(err))
     }
     return (
         <ThemeProvider theme={theme}>
@@ -103,7 +119,7 @@ export default function Details(props: DetailsProps) {
                             <Typography variant="h5">Languages</Typography>
                             <List dense={false}>
                                 {
-                                langs.map((language, index) => {
+                                props.languages.map((language, index) => {
                                     return (
                                         <ListItem key={index}>
                                             <ListItemIcon>

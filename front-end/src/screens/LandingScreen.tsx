@@ -28,7 +28,8 @@ import { initializeApp } from 'firebase/app';
 import { Firestore, getFirestore, getDoc, doc, updateDoc, collection, getDocs, setDoc } from 'firebase/firestore/lite';
 import { firebaseConfig } from '../config/firebase';
 // import { getAuth } from 'firebase/auth';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { Login } from '../components/Login';
 
 const repos = [repogotchi, repogotchi2, repogotchi3, repogotchi4];
 
@@ -42,11 +43,12 @@ theme.typography.h5 = {
     fontStyle: 'italic'
 }
 
-theme.typography.h6 = {
-    fontSize: '1.4rem',
+theme.typography.h2 = {
+    fontSize: '3rem',
     fontWeight: 400,
-    marginTop: 150,
-    textAlign: 'center'
+    marginTop: 20,
+    textAlign: 'center',
+    overflowWrap: 'break-word'
 }
 
 // theme.palette = {
@@ -74,10 +76,6 @@ export type LandingScreenProps = {
 export default function LandingScreen(props: LandingScreenProps) {
     const { width, height } = useWindowDimensions();
 
-    const [username, setUser] = useState("");
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -95,137 +93,136 @@ export default function LandingScreen(props: LandingScreenProps) {
     useEffect(() => {
         if (localStorage.getItem("user")) {
             nav('/home')
+        } else {
+            // signOut(auth).then(() => {
+            //     localStorage.clear();
+            //     nav("/")
+            //     // Sign-out successful.
+            //   }).catch((error) => {
+            //     // An error happened.
+            //   });
         }
         setRepoIndex(Math.floor(Math.random() * repos.length));
     }, [])
 
     const nav = useNavigate();
 
-    const updateEmail = (e: any) => {
-        setEmail(e.target.value);
-    }
+    // const login =  () => {
+    //     setLoading(true);
 
-    const updateUser = (e: any) => {
-        setUser(e.target.value);
-    }
+    //     const work = async () => {
 
-    const updatePass = (e: any) => {
-        setPass(e.target.value);
-    }
-
-    const login =  () => {
-        setLoading(true);
-
-        const work = async () => {
-
-            const docRef = doc(db, "users/" + email);
-            const snapDoc = await getDoc(docRef);
+    //         const docRef = doc(db, "users/" + email);
+    //         const snapDoc = await getDoc(docRef);
 
 
-            const auth = getAuth();
-            if (snapDoc.exists()) {
-                // auth the user
-                signInWithEmailAndPassword(auth, email, pass)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        setError(errorMessage);
-                    });
-                
-                // onAuthStateChanged(auth, (user) => {
-                //     const data = snapDoc.data();
+    //         const auth = getAuth()
+    //         setPersistence(auth, browserLocalPersistence).then(() => {
+    //             if (snapDoc.exists()) {
+    //                 // auth the user
+    //                 signInWithEmailAndPassword(auth, email, pass)
+    //                     .then((userCredential) => {
+    //                         const user = userCredential.user;
+    //                     })
+    //                     .catch((error) => {
+    //                         const errorCode = error.code;
+    //                         const errorMessage = error.message;
+    //                         setError(errorMessage);
+    //                     });
+                    
+    //                 // onAuthStateChanged(auth, (user) => {
+    //                 //     const data = snapDoc.data();
 
-                //     if ((data.github === username) && user) {
-                //         localStorage.setItem('user', username);
-                //         localStorage.setItem('email', email);
-                //         // setLoading(false);
-                //         nav('/home')
-                //     } else {
-                //         nav("/")
-                //         setLoading(false);
-                //         signOut(auth).then(() => {
-                //             localStorage.clear();
-                //             // setLoading(false);
-                //             // setError("A user already exists with this email. But, wrong github username")
-                //             // nav("/")
-                //             // Sign-out successful.
-                //           }).catch((error) => {
-                //             // An error happened.
-                //           });
-                //     }
+    //                 //     if ((data.github === username) && user) {
+    //                 //         localStorage.setItem('user', username);
+    //                 //         localStorage.setItem('email', email);
+    //                 //         // setLoading(false);
+    //                 //         nav('/home')
+    //                 //     } else {
+    //                 //         nav("/")
+    //                 //         setLoading(false);
+    //                 //         signOut(auth).then(() => {
+    //                 //             localStorage.clear();
+    //                 //             // setLoading(false);
+    //                 //             // setError("A user already exists with this email. But, wrong github username")
+    //                 //             // nav("/")
+    //                 //             // Sign-out successful.
+    //                 //           }).catch((error) => {
+    //                 //             // An error happened.
+    //                 //           });
+    //                 //     }
 
-                    // if (data.github !== username) {
-                    //     localStorage.clear()
-                    //     setError("");
-                    //     setLoading(false);
-                    // }
-                    // setLoading(false);
-            } else {
-                // create the user
-                createUserWithEmailAndPassword(auth, email, pass)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        const userDoc = doc(db, "users/" + email)
+    //                     // if (data.github !== username) {
+    //                     //     localStorage.clear()
+    //                     //     setError("");
+    //                     //     setLoading(false);
+    //                     // }
+    //                     // setLoading(false);
+    //             } else {
+    //                 // create the user
+    //                 createUserWithEmailAndPassword(auth, email, pass)
+    //                     .then((userCredential) => {
+    //                         const user = userCredential.user;
+    //                         const userDoc = doc(db, "users/" + email)
 
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        setError(errorMessage);
-                    });
+    //                     })
+    //                     .catch((error) => {
+    //                         const errorCode = error.code;
+    //                         const errorMessage = error.message;
+    //                         setError(errorMessage);
+    //                     });
 
-                const userDoc = doc(db, "users/" + email)
-                const set_the_things = async () => {
-                    await setDoc(userDoc, {'username': email, 'github': username});
-                }
+    //                 const userDoc = doc(db, "users/" + email)
+    //                 const set_the_things = async () => {
+    //                     await setDoc(userDoc, {'username': email, 'github': username});
+    //                 }
 
-                // onAuthStateChanged(auth, (user) => {
-                //     if (user) {
-                //         set_the_things();
-                //         localStorage.setItem('user', username);
-                //         localStorage.setItem('email', email);
-                //         nav('/home')
-                //     } else {
-                //     //   setLoading(false);
-                //     }
-                //     // setLoading(false);
-                //   });
-            }
+    //                 // onAuthStateChanged(auth, (user) => {
+    //                 //     if (user) {
+    //                 //         set_the_things();
+    //                 //         localStorage.setItem('user', username);
+    //                 //         localStorage.setItem('email', email);
+    //                 //         nav('/home')
+    //                 //     } else {
+    //                 //     //   setLoading(false);
+    //                 //     }
+    //                 //     // setLoading(false);
+    //                 //   });
+    //             }
+    //         })
 
-            onAuthStateChanged(auth, (user) => {
-                const data = snapDoc.data();
+    //         onAuthStateChanged(auth, (user) => {
+    //             const data = snapDoc.data();
 
-                if (data && user) {
-                    if (data.github === username) {
-                        localStorage.setItem('user', username);
-                        localStorage.setItem('email', email);
-                        setLoading(false);
-                        nav('/home')
-                    } else {
-                        nav("/")
-                        setLoading(false);
-                        signOut(auth).then(() => {
-                            // localStorage.clear();
-                            // setLoading(false);
-                            // setError("A user already exists with this email. But, wrong github username")
-                            // nav("/")
-                            // Sign-out successful.
-                        }).catch((error) => {
-                            // An error happened.
-                        });
-                    }
-                }
-            })
-        }
+    //             if (data && user) {
+    //                 if (data.github === username) {
+    //                     localStorage.setItem('user', username);
+    //                     localStorage.setItem('email', email);
+    //                     setLoading(false);
+    //                     nav('/home')
+    //                 } else {
+    //                     nav("/")
+    //                     setLoading(false);
+    //                     console.log("ASDHASJDAS");
+    //                     signOut(auth).then(() => {
+    //                         // localStorage.clear();
+    //                         // setLoading(false);
+    //                         // setError("A user already exists with this email. But, wrong github username")
+    //                         // nav("/")
+    //                         // Sign-out successful.
+    //                     }).catch((error) => {
+    //                         // An error happened.
+    //                     });
+    //                 }
+    //             }
+    //         })
+    //     }
 
-        work();
-    }
+    //     work();
+    // }
 
     const exampleRepo: RepogotchiType = {
-        GithubName: "My-Project-Repo",
+        GithubName: "MyFunRepository",
         PersonalName: "Mittens",
         Age: 9,
         Languages: [""],
@@ -240,6 +237,7 @@ export default function LandingScreen(props: LandingScreenProps) {
         LastVisit: "",
         Affection: 15,
         MaxAffection: 20,
+        Owner: "",
         Body: 1,
         Eyes: 0,
         Mouth: 0,
@@ -255,23 +253,12 @@ export default function LandingScreen(props: LandingScreenProps) {
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <Box sx={{ ml: 5 }} >
-                                <Typography variant="h2" sx={{ ml: 13, mt: 3 }}>TamaGit</Typography>
+                                <Typography variant="h2">TamaGit</Typography>
                                 <Typography variant="h5">
                                     Never forget about your beloved projects again
                                 </Typography>
-                                <Typography variant="h6">
-                                    Get started...
-                                </Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', height: 200, mt: 3 }}>
-                                    <TextField id="email-input" label="TamaGit Email" variant="outlined" sx={{ width: '80%' }} onChange={(e) => updateEmail(e)} />
-                                    <TextField id="password-input" label="TamaGit Password" variant="outlined" sx={{ width: '80%' }} type="password" onChange={(e) => updatePass(e)}/>
-                                    <TextField id="username-input" label="Github Username" variant="outlined" sx={{ width: '80%' }}
-                                     onChange={(e) => updateUser(e)} style = {{marginTop: 30, marginBottom: -18}} />
-                                </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', mt: 3 }}>
-                                    <Button variant="contained" sx={styles.button} size="large" onClick={login}>{loading ? "loading" : "Login"}</Button>
-                                    { error ? error : ""}
-                                </Box>
+
+                                <Login />
                             </Box>
                         </Grid>
                         <Grid item xs={8}>

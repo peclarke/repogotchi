@@ -8,7 +8,7 @@ import Repogotchi from '../components/Repogotchi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { initializeApp } from 'firebase/app';
-import { Firestore, getFirestore, getDoc, doc, updateDoc } from 'firebase/firestore/lite';
+import { Firestore, getFirestore, getDoc, doc, updateDoc, collection, getDocs } from 'firebase/firestore/lite';
 import { firebaseConfig } from '../config/firebase';
 import { RepogotchiType } from '../state/repo';
 import RepoButtons from '../components/RepoButtons';
@@ -35,6 +35,7 @@ export default function RepoScreen(props: RepoScreenProps) {
         LastVisit: "",
         Affection: 0,
         MaxAffection: 0,
+        Owner: "",
         Body: 0,
         Eyes: 0,
         Mouth: 0,
@@ -42,6 +43,9 @@ export default function RepoScreen(props: RepoScreenProps) {
         Ears: 0,
         Colour: "white",
     });
+
+    const [owner, setOwner] = useState("");
+
     const { height } = useWindowDimensions();
 
     const { id } = useParams();
@@ -49,9 +53,16 @@ export default function RepoScreen(props: RepoScreenProps) {
     const nav = useNavigate();
 
     useEffect(() => {
+        // setOwner(rep.Owner)
+    }, [rep])
+
+    useEffect(() => {
         if (!localStorage.getItem("user")) {
             nav("/")
         }
+
+        console.log(localStorage.getItem("user"));
+        console.log(localStorage.getItem("email"));
 
         getInfo();
     }, [])
@@ -66,6 +77,7 @@ export default function RepoScreen(props: RepoScreenProps) {
             const docRef = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis/" + id);
             const snapDoc = await getDoc(docRef);
             const data = snapDoc.data();
+            // console.log(data);
             if (data) {
                 setRep({
                     GithubName: data.GithubName,
@@ -83,6 +95,7 @@ export default function RepoScreen(props: RepoScreenProps) {
                     LastVisit: data.LastVisit,
                     Affection: data.Affection,
                     MaxAffection: data.MaxAffection,
+                    Owner: data.Owner,
                     Body: data.Body,
                     Eyes: data.Eyes,
                     Mouth: data.Mouth,
@@ -90,8 +103,20 @@ export default function RepoScreen(props: RepoScreenProps) {
                     Ears: data.Ears,
                     Colour: data.Colour,
                 })
+                // setOwner(rep.Owner)
             }
         }
+
+        const sortCommits = async () => {
+            const docRefs = collection(db, "users/" + localStorage.getItem("email") + "/repogotchis/" + id + "/commits");
+            const snapCollection = await getDocs(docRefs);
+            // get most recent thing
+
+            // compare it to today
+
+            // either make GH query or not
+        }
+
         stuff();
     }
 
@@ -132,7 +157,7 @@ export default function RepoScreen(props: RepoScreenProps) {
                     </Grid>
                     <Grid item xs={4}>
                         <Box sx={{ ml: 5, background: "linear-gradient(#e66465, #9198e5)", height: height, mt: -5, pt: 5 }}>
-                            <Details languages={rep.Languages} />
+                            <Details languages={rep.Languages} owner={owner}/>
                         </Box>
                     </Grid>
                 </Grid>

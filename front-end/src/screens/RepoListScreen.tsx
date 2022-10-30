@@ -24,13 +24,14 @@ export default function RepoListScreen(props: RepoListScreenProps) {
     const nav = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem("user")) {
-            nav("/")
-        }
+        // if (!localStorage.getItem("user")) {
+        //     nav("/")
+        // }
 
         // console.log(localStorage.getItem("user"))
         // console.log(localStorage.getItem("email"))
 
+        // const app = initializeApp(firebaseConfig);
         getUserRepos();
     }, [])
 
@@ -63,6 +64,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                     LastVisit: data.LastVisit,
                     Affection: data.Affection,
                     MaxAffection: data.MaxAffection,
+                    Owner: data.Owner,
                     Body: data.Body,
                     Eyes: data.Eyes,
                     Mouth: data.Mouth,

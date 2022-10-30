@@ -38,11 +38,11 @@ export default function RepoListItem(props: RepoListItemProps) {
                     <Box sx={{ ml: -10, mt: -7, position: "absolute" }}>
                         <RepogotchiDisplay repo={props.repo} imgWidth={200} containerHeight={200} />
                     </Box>
-                    <Box sx={{ ml: 15, width: 800 }}>
+                    <Box sx={{ ml: 15, width: 800, overflow: 'hidden' }}>
                         <Typography variant="h5">{props.repo.GithubName}</Typography>
-                        <Typography>{props.repo.PersonalName}</Typography>
+                        <Typography sx={{color: "gray"}}>{props.repo.PersonalName}</Typography>
                     </Box>
-                    <Box display="flex" flexDirection="row" sx={{ width: '100%', mt: -1, ml: 3 }}>
+                    <Box display="flex" flexDirection="row" sx={{ width: '100%', mt: -1, ml: 3, overflow: 'clip' }}>
                         <Box sx={{ width: '50%' }}>
                             <Progress title="" bio="Health" progress={healthPercent} />
                         </Box>

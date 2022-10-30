@@ -15,6 +15,7 @@ export type RepogotchiType = {
     LastVisit: Object;
     Affection: number;
     MaxAffection: number;
+    Owner: string;
     // Fields for sprite generation
     Body: number;
     Eyes: number;

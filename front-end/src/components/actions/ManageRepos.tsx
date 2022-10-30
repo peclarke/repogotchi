@@ -17,6 +17,7 @@ import generate, { SpriteGeneration } from '../../generation/generate';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
+import axios from 'axios';
 
 export type ManageReposProps = {
     updateRepos: () => void;
@@ -51,14 +52,16 @@ export default function ManageRepos(props: ManageReposProps) {
     }
 
     const signout = () => {
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            localStorage.clear();
-            nav("/")
-            // Sign-out successful.
-          }).catch((error) => {
-            // An error happened.
-          });
+        // const auth = getAuth();
+        // signOut(auth).then(() => {
+        //     localStorage.clear();
+        //     nav("/")
+        //     // Sign-out successful.
+        //   }).catch((error) => {
+        //     // An error happened.
+        //   });
+        localStorage.clear()
+        nav("/")
     }
 
     const names = [
@@ -85,6 +88,16 @@ export default function ManageRepos(props: ManageReposProps) {
         const username = delimited[1];
 
         const baseUrl = "https://api.github.com/repos/" + username + "/" + repoName
+
+        // axios({
+        //     method: 'get',
+        //     url: baseUrl,
+        //     responseType: 
+        // })
+        //     .then((json) => {
+        //         console.log(json)
+        //     })
+
         fetch(baseUrl)
             .then(res => res.json())
             .then((json) => {
@@ -92,6 +105,7 @@ export default function ManageRepos(props: ManageReposProps) {
                     .then(res => res.json())
                     .then((jsonLang) => {
                         const sprite: SpriteGeneration = generate();
+                        console.log(json);
                         const repo: RepogotchiType = {
                             GithubName: json['name'],
                             PersonalName: names[Math.floor(Math.random() * names.length)],
@@ -108,6 +122,7 @@ export default function ManageRepos(props: ManageReposProps) {
                             LastVisit: serverTimestamp(),
                             Affection: 10,
                             MaxAffection: 10,
+                            Owner: json['owner']['login'],
                             Body: sprite.body,
                             Eyes: sprite.eyes,
                             Mouth: sprite.mouth,
