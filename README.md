@@ -32,6 +32,10 @@ This is your Repogotchi, your new best friend! He's going to help you stay motiv
 - When adding a repository thats under a different user/organisation's name, the system is unable to query GitHub for its commits and languages
 - Commits need to be cached. Github rate limits the requests.
 
+## Future Plans
+- Redesign of individual Repogotchi page
+- Redesigning the colour scheme
+
 ## Possible future plans
 - Adding GitHub OAuth integration to allow easier adding of repositories, automatic webhook creation, and support for private repos
 - Auth the requests going to Github to increase the rate limit on requests.
