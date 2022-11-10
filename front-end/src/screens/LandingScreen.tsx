@@ -30,6 +30,7 @@ import { firebaseConfig } from '../config/firebase';
 // import { getAuth } from 'firebase/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { Login } from '../components/Login';
+import useGradient from '../hooks/useGradient';
 
 const repos = [repogotchi, repogotchi2, repogotchi3, repogotchi4];
 
@@ -123,6 +124,7 @@ export default function LandingScreen(props: LandingScreenProps) {
     }, [])
 
     const nav = useNavigate();
+    const gradient = useGradient();
 
     return (
         <form>
@@ -142,7 +144,7 @@ export default function LandingScreen(props: LandingScreenProps) {
                         <Grid item xs={8}>
                             <Box sx={{
                                 justifyContent: 'center', display: 'flex',
-                                flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
+                                flexDirection: 'column', height: height, background: gradient,
                                 paddingLeft: 4, paddingRight: 4
                             }}>
                                 <FadeIn>

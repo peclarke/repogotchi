@@ -26,7 +26,7 @@ const loginStyles = {
     h2: {
         fontSize: '3rem',
         fontWeight: 400,
-        marginTop: 20,
+        marginTop: 10,
         textAlign: 'center',
         overflowWrap: 'break-word'
     },
@@ -72,7 +72,8 @@ const loginStyles = {
     },
     link: {
         textDecoration: 'none',
-        fontWeight: 500
+        fontWeight: 600,
+        color: "#9e5482"
     }
 }
 

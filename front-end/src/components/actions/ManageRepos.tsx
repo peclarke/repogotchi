@@ -89,15 +89,6 @@ export default function ManageRepos(props: ManageReposProps) {
 
         const baseUrl = "https://api.github.com/repos/" + username + "/" + repoName
 
-        // axios({
-        //     method: 'get',
-        //     url: baseUrl,
-        //     responseType: 
-        // })
-        //     .then((json) => {
-        //         console.log(json)
-        //     })
-
         fetch(baseUrl)
             .then(res => res.json())
             .then((json) => {

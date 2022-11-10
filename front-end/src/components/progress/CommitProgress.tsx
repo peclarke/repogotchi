@@ -4,6 +4,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { RepogotchiType } from '../../state/repo';
+import { Paper } from '@mui/material';
   
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 height: 15,
@@ -31,6 +32,17 @@ theme.typography.h6 = {
     fontWeight: 50
 }
 
+export const repoStatusTheme = {
+    m: 2,
+    lineHeight: 3, 
+    width: '80%', 
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    paddingBottom: 3
+}
+
 export type CommitProgressProps = {
     progress: number;
     repo: RepogotchiType;
@@ -48,11 +60,13 @@ export default function CommitProgress(props: CommitProgressProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx = {{ m: 2, lineHeight: 3, width: '100%' }}>
-                <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: {props.repo.Level}</Typography>
-                <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>{props.repo.LevelProgress} / {props.repo.LevelReq} XP</Typography>
-                <BorderLinearProgress variant="determinate" value={prog} />
-            </Box>
+            <Paper sx = {repoStatusTheme} elevation={15}>
+                {/* <Box sx = {{ m: 2, lineHeight: 3, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}> */}
+                    <Typography variant="h5" component="h2" sx = {{ pb: 1.5, textAlign: 'center' }}>Current Level: {props.repo.Level}</Typography>
+                    <Typography sx = {{ pb: 1.5, textAlign: 'center' }}>{props.repo.LevelProgress} / {props.repo.LevelReq} XP</Typography>
+                    <BorderLinearProgress variant="determinate" value={prog} sx = {{width: '60%'}} />
+                {/* </Box> */}
+            </Paper>
         </ThemeProvider>
     )
 }

@@ -1,0 +1,26 @@
+export const useDefaultRepogotchi = () => {
+    return {
+        GithubName: "",
+        PersonalName: "",
+        Age: 0,
+        Languages: [""],
+        MaxHealth: 100,
+        CurrentHealth: 100,
+        CommitProgress: 100,
+        LastCommit: "",
+        Level: 0,
+        Birthdate: "",
+        LevelProgress: 0,
+        LevelReq: 0,
+        LastVisit: "",
+        Affection: 0,
+        MaxAffection: 0,
+        Owner: "",
+        Body: 0,
+        Eyes: 0,
+        Mouth: 0,
+        Accessory: 0,
+        Ears: 0,
+        Colour: "white",
+    }
+}

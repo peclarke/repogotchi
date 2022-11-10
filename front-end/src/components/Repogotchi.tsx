@@ -43,6 +43,11 @@ export type RepogotchiDisplayProps = {
     containerHeight: number;
 }
 
+const RepogotchiTheme = {
+    top: -10,
+    left: -5
+}
+
 export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const healthPercent = Math.floor(props.repo.CurrentHealth / props.repo.MaxHealth * 100);
     const mouthTransform = () => {
@@ -93,7 +98,7 @@ export function RepogotchiDisplay(props: RepogotchiDisplayProps) {
     const tearsSrc = require('../sprite/tears.png');
     const deadEyesSrc = require('../sprite/deadeyes.png');
 
-    return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: props.imgWidth, height: props.containerHeight }}>
+    return (<Box display="inline" alignItems="center" justifyContent="center" position="relative" style={{ width: props.imgWidth, height: props.containerHeight, ...RepogotchiTheme }}>
         <ColourLayer height={1} src={earsMaskSrc} width={props.imgWidth} colour={props.repo.Colour} imgHeight={props.containerHeight} />
         <SpriteLayer height={2} src={earsSrc} width={props.imgWidth} opacity={100} />
         <ColourLayer height={3} src={bodyMaskSrc} width={props.imgWidth} colour={props.repo.Colour} imgHeight={props.containerHeight} />
@@ -114,7 +119,7 @@ export type RepogotchiProps = {
 
 export default function Repogotchi(props: RepogotchiProps) {
 
-    const { width, height } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     const imgWidth = width / 3 - 50;
 
@@ -125,7 +130,7 @@ export default function Repogotchi(props: RepogotchiProps) {
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" style={{ marginTop: 50 }}>
                 <Typography variant="h5">{props.name}</Typography>
                 <br></br>
-                <RepogotchiDisplay repo={props.repo} imgWidth={imgWidth} containerHeight={500} />
+                <RepogotchiDisplay repo={props.repo} imgWidth={imgWidth} containerHeight={400} />
                 <CommitProgress progress={commitProgress} repo={props.repo} />
             </Box>
         </ThemeProvider>

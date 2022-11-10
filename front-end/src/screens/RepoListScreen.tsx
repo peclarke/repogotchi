@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ManageRepos from '../components/actions/ManageRepos';
 import RepoList from '../components/RepoList/RepoList';
 import { firebaseConfig } from '../config/firebase';
+import useGradient from '../hooks/useGradient';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { RepogotchiType } from '../state/repo';
 
@@ -81,14 +82,16 @@ export default function RepoListScreen(props: RepoListScreenProps) {
         return [];
     }
 
+    const gradient = useGradient();
+
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <Box sx={{
-                            justifyContent: 'space-evenly', display: 'flex',
-                            flexDirection: 'column', height: height, background: "linear-gradient(#e66465, #9198e5)",
+                            display: 'flex',
+                            flexDirection: 'column', height: height, background: gradient,
                             paddingLeft: 4, paddingRight: 4
                         }}>
                             {/* Render this with a proper list element from mui. Only allow 5 repogotchis  */}
