@@ -20,7 +20,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import axios from 'axios';
 
 export type ManageReposProps = {
-    updateRepos: () => void;
+    updateRepos: () => Promise<never[]>;
     allowAdds: boolean;
 }
 

@@ -6,9 +6,16 @@ import RepoListItem from './RepoListItem';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import InfoIcon from '@mui/icons-material/Info';
+import ActionRepoDialog from '../../dialogs/ActionRepoDialog';
+import generate, { SpriteGeneration } from '../../generation/generate';
+import { getFirestore, setDoc, Firestore, doc, serverTimestamp } from 'firebase/firestore/lite';
+import { firebaseConfig } from '../../config/firebase';
+import { initializeApp } from 'firebase/app';
+import { names } from '../../utils/consts';
 
 export type RepoListProps = {
-    repos: RepogotchiType[];
+    repos:       RepogotchiType[];
+    updateRepos: () => Promise<never[]>;
 }
 
 const baseIconTheme = {
@@ -75,7 +82,7 @@ export default function RepoList(props: RepoListProps) {
                             {/* <RemoveCircleIcon sx={removeIconTheme} onMouseEnter={() => setRemoveHover(true)} onMouseLeave={() => setRemoveHover(false)}/>
                             <InfoIcon sx={infoIconTheme} onMouseEnter={() => setInfoHover(true)} onMouseLeave={() => setInfoHover(false)} /> */}
                         </div>
-                        <AddRepoShape />
+                        <AddRepoShape updateRepos={props.updateRepos}/>
                       </div>
                     : <div style={repoTheme}>
                         <RepoListItem repo={repo}/>
@@ -88,8 +95,72 @@ export default function RepoList(props: RepoListProps) {
     )
 }
 
-const AddRepoShape = () => {
+export type AddRepoShapeProps = {
+    updateRepos: () => Promise<never[]>;
+}
+
+const AddRepoShape = (props: AddRepoShapeProps) => {
     const [hovering, setHovering] = useState(false)
+    const [open, setOpen] = useState(false)
+
+    const add_repo = (githubUrl: string) => {
+        const app = initializeApp(firebaseConfig);
+        const db: Firestore = getFirestore(app);
+
+        const delimited = githubUrl.split("/").reverse();
+        const repoName = delimited[0];
+        const username = delimited[1];
+
+        const baseUrl = "https://api.github.com/repos/" + username + "/" + repoName
+
+        fetch(baseUrl)
+            .then(res => res.json())
+            .then((json) => {
+                fetch(baseUrl + "/languages")
+                    .then(res => res.json())
+                    .then((jsonLang) => {
+                        const sprite: SpriteGeneration = generate();
+                        const repo: RepogotchiType = {
+                            GithubName: json['name'],
+                            PersonalName: names[Math.floor(Math.random() * names.length)],
+                            Age: 0,
+                            Languages: Object.keys(jsonLang),
+                            MaxHealth: 20,
+                            CurrentHealth: 20,
+                            CommitProgress: 100,
+                            LastCommit: "",
+                            Level: 1,
+                            Birthdate: new Date(json['created_at']).toDateString(),
+                            LevelProgress: 0,
+                            LevelReq: 20,
+                            LastVisit: serverTimestamp(),
+                            Affection: 10,
+                            MaxAffection: 10,
+                            Owner: json['owner']['login'],
+                            Body: sprite.body,
+                            Eyes: sprite.eyes,
+                            Mouth: sprite.mouth,
+                            Accessory: sprite.accessory,
+                            Ears: sprite.ears,
+                            Colour: sprite.colour,
+                        }
+
+                        const userStuff = async () => {
+                            // const repoCol = collection(db, "users/peclarke/repogotchis");
+                            const repoDoc = doc(db, "users/" + localStorage.getItem("email") + "/repogotchis", json['name'])
+                            // const docRef = await addDoc(repoCol, repo);
+                            const docRef = await setDoc(repoDoc, repo)
+                            props.updateRepos();
+                        }
+
+                        userStuff();
+                    }, (err) => {
+                        console.log(err)
+                    })
+            }, (err) => {
+                console.log(err)
+            })
+    }
 
     const addRepoTheme = {
         border: '2px solid black',
@@ -109,8 +180,11 @@ const AddRepoShape = () => {
     }
 
     return (
-        <div style={addRepoTheme} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} onClick={undefined}>
-            <AddIcon style={iconStyle}/>
-        </div>
+        <>
+            <ActionRepoDialog open={open} onClose={() => setOpen(false)} action={(url: string) => add_repo(url)} type={'add'} />
+            <div style={addRepoTheme} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} onClick={() => setOpen(true)}>
+                <AddIcon style={iconStyle}/>
+            </div>
+        </>
     )
 }

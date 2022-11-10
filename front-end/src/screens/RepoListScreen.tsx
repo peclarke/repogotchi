@@ -96,7 +96,7 @@ export default function RepoListScreen(props: RepoListScreenProps) {
                         }}>
                             {/* Render this with a proper list element from mui. Only allow 5 repogotchis  */}
 
-                            <RepoList repos={repos} />
+                            <RepoList repos={repos} updateRepos={getUserRepos}/>
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
